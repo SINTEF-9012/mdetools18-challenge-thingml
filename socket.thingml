@@ -1,0 +1,32 @@
+import "settings.thingml"
+
+thing fragment SocketMsgs {
+	message Open(ip : PrimitiveString, pport : Integer)
+	message WasOpened()
+	message WasClosed()
+	
+	message Out(line : PrimitiveString)
+	message In(line : PrimitiveString)
+}
+
+thing Socket includes SocketMsgs {
+	provided port Socket {
+		receives Open
+		sends WasOpened, WasClosed
+		
+		receives Out
+		sends In
+	}
+	
+	statechart Socket init WaitForOpen {
+		state WaitForOpen {
+			transition -> IsOpen
+			event m : Socket?Open
+			action println "Opening socket ", m.ip, ":", m.pport
+		}
+		
+		state IsOpen {
+			on entry Socket!WasOpened()
+		}
+	}
+}

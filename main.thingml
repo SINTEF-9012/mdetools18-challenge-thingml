@@ -1,0 +1,14 @@
+import "settings.thingml"
+import "communicator.thingml"
+
+configuration RoverController {
+	instance parser : SettingsParser
+	
+	instance control : Socket
+	instance observation : Socket
+	
+	instance communicator : Communicator
+	connector communicator.Loaded => parser.Loaded
+	connector communicator.ControlSocket => control.Socket
+	connector communicator.ObservationSocket => observation.Socket
+}

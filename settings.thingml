@@ -1,0 +1,79 @@
+import "datatypes.thingml" from stl
+
+datatype PrimitiveString<0>
+	@java_type "String";
+
+thing fragment SettingsMsgs {
+	message Settings(
+		controlPort : Integer,
+		observationPort : Integer,
+		simulationIP : PrimitiveString,
+		runTime : Integer,
+		tooClose : Integer,
+		tooFar : Integer,
+		sampleRate : Integer
+	)
+}
+
+thing SettingsParser includes SettingsMsgs
+@java_import `
+	import java.io.FileReader;
+	import java.io.BufferedReader;
+	import java.io.IOException;
+`
+{
+	property ConfigPath : String = "Challenge problem/Settings/config.txt"
+	
+	provided port Loaded {
+		sends Settings
+	}
+	
+	statechart Loader init LoadConfiguration {
+		state LoadConfiguration {
+			property controlPort : Integer = 0
+			property observationPort : Integer = 0
+			property simulationIP : PrimitiveString = ""
+			property runTime : Integer = 0
+			property tooClose : Integer = 0
+			property tooFar : Integer = 0
+			property sampleRate : Integer = 0
+			
+			on entry do
+				`
+					try (BufferedReader br = new BufferedReader(new FileReader(`&ConfigPath&`))) {
+						for (String line = br.readLine(); line != null; line = br.readLine()) {
+							String[] option = line.split("=", 2);
+							switch (option[0]) {
+								case "controlPort":
+									` controlPort = `Integer.parseInt(option[1])` `
+									break;
+								case "observationPort":
+									` observationPort = `Integer.parseInt(option[1])` `
+									break;
+								case "simulationIP":
+									` simulationIP = `option[1]` `
+									break;
+								case "runTime":
+									` runTime = `Integer.parseInt(option[1])` `
+									break;
+								case "tooClose":
+									` tooClose = `Integer.parseInt(option[1])` `
+									break;
+								case "tooFar":
+									` tooFar = `Integer.parseInt(option[1])` `
+									break;
+								case "sampleRate":
+									` sampleRate = `Integer.parseInt(option[1])` `
+									break;
+							}
+						}
+						` Loaded!Settings(controlPort, observationPort, simulationIP, runTime, tooClose, tooFar, sampleRate) `
+					} catch (IOException e) {
+						System.err.println("Couldn't read config file: "+`&ConfigPath&`);
+						System.exit(1);
+					}
+				`
+			end
+		}
+	}
+}
