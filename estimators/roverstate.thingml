@@ -1,0 +1,129 @@
+import "../coms/communicator.thingml"
+import "../lib/timer.thingml"
+import "differentiation.thingml"
+
+thing fragment RoverStateEstimatorMsgs {
+	message RoverState(
+		x : Double,
+		xd : Double,
+		xdd : Double,
+		y : Double,
+		yd : Double,
+		ydd : Double,
+		phi : Double,
+		phid : Double,
+		phidd : Double
+	)
+}
+
+thing fragment RoverStateEstimatorClient includes RoverStateEstimatorMsgs {
+	required port RoverEstimator {
+		receives RoverState
+	}
+}
+
+thing RoverStateEstimator includes RoverStateEstimatorMsgs, StateEstimator, TimerClient, RoverClient {
+	
+	provided port Estimator {
+		sends RoverState
+	}
+	
+	property SamplesX : Double[N]
+	property SamplesY : Double[N]
+	property SamplesPhi : Double[N]
+	
+	statechart Estimator init WaitForStarted {
+		state WaitForStarted {
+			transition -> Bootstrap
+			event Rover?SimulationStarted
+		}
+		
+		// Fill up the samples before we start estimating
+		composite state Bootstrap init GetPosition {
+			property SamplesRead : Integer = 0
+			
+			on entry println "Bootstrapping Rover estimator..."
+			
+			state GetPosition {
+				on entry Rover!GetRoverPosition()
+				
+				transition -> GetCompass
+				event pos : Rover?RoverPosition
+				action do
+					PushItem(SamplesX, pos.x)
+					PushItem(SamplesY, pos.y)
+				end
+			}
+			
+			state GetCompass {
+				on entry Rover!GetRoverCompass()
+				
+				transition -> Wait
+				event comp : Rover?RoverCompass
+				action PushItem(SamplesPhi, comp.phi)
+			}
+			
+			state Wait {
+				on entry do
+					SamplesRead ++
+					Timer!timer_start(1, SampleRate)
+				end
+				
+				transition -> GetPosition
+				event t : Timer?timer_timeout
+				guard (t.id == 1 and SamplesRead < N)
+			}
+			
+			transition -> Estimate
+			event t : Timer?timer_timeout
+			guard (t.id == 1)
+		}
+		
+		composite state Estimate init FiniteDifferences {
+			on entry println "Estimating Rover state..."
+			
+			state FiniteDifferences {
+				on entry do
+					Timer!timer_start(1, SampleRate)
+					
+					var x : Double = SamplesX[N-1]
+					var xd : Double = Differentiate(SamplesX, FirstOrderCoeffs)
+					var xdd : Double = Differentiate(SamplesX, SecondOrderCoeffs)
+					
+					var y : Double = SamplesY[N-1]
+					var yd : Double = Differentiate(SamplesY, FirstOrderCoeffs)
+					var ydd : Double = Differentiate(SamplesY, SecondOrderCoeffs)
+					
+					var phi : Double = SamplesPhi[N-1]
+					var phid : Double = Differentiate(SamplesPhi, FirstOrderCoeffs)
+					var phidd : Double = Differentiate(SamplesPhi, SecondOrderCoeffs)
+					
+					Estimator!RoverState(x, xd, xdd, y, yd, ydd, phi, phid, phidd)
+				end
+				
+				transition -> GetPosition
+				event t : Timer?timer_timeout
+				guard (t.id == 1)
+			}
+			
+			state GetPosition {
+				on entry Rover!GetRoverPosition()
+				
+				transition -> GetCompass
+				event pos : Rover?RoverPosition
+				action do
+					PushItem(SamplesX, pos.x)
+					PushItem(SamplesY, pos.y)
+				end
+			}
+			
+			state GetCompass {
+				on entry Rover!GetRoverCompass()
+				
+				transition -> FiniteDifferences
+				event comp : Rover?RoverCompass
+				action PushItem(SamplesPhi, comp.phi)
+			}
+		}
+	}
+}

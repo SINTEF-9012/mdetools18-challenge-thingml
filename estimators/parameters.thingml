@@ -1,0 +1,101 @@
+import "../lib/timer.thingml"
+import "roverstate.thingml"
+import "leaderstate.thingml"
+
+thing fragment ParameterEstimatorMsgs {
+	message SystemState(
+		CompassError : Double,
+		RoverProjectedSpeed : Double,
+		LeaderSpeed : Double,
+		Distance : Double
+	)
+}
+
+thing fragment ParameterEstimatorClient includes ParameterEstimatorMsgs {
+	required port Estimator {
+		receives SystemState
+	}
+}
+
+
+thing ParameterEstimator includes ParameterEstimatorMsgs, TimerClient, RoverStateEstimatorClient, LeaderStateEstimatorClient
+@java_import `
+	import java.lang.Math;
+`
+{
+	provided port Estimator {
+		sends SystemState
+	}
+	
+	property SampleRate : UInt32 = 100
+	
+	statechart Estimator init WaitForEstimates {
+		property hasRover : Boolean = false
+		property hasLeader : Boolean = false
+		
+		property roverX : Double = 0
+		property roverY : Double = 0
+		property roverCompass : Double = 0
+		property roverXd : Double = 0
+		property roverYd : Double = 0
+		
+		property leaderX : Double = 0
+		property leaderY : Double = 0
+		property leaderXd : Double = 0
+		property leaderYd : Double = 0
+		
+		state WaitForEstimates {
+			transition -> Estimate
+			guard (hasRover and hasLeader)
+		}
+		
+		state Estimate {
+			on entry do
+				Timer!timer_start(3, SampleRate)
+				
+				// Distance between Rover and Leader
+				var distance : Double = `Math.hypot(`&leaderX-roverX&`, `&leaderY-roverY&`)`
+				
+				// Compass angle from Rover to Leader
+				var angle : Double = `Math.atan2(`&leaderY-roverY&`, `&leaderX-roverX&`)/Math.PI*180`
+				var angleCompass : Double = 90-angle
+				if (angleCompass < 0) angleCompass = angleCompass + 360
+				var compassError : Double = angleCompass - roverCompass
+				if (compassError > 180) compassError = compassError - 360
+				if (compassError < -180) compassError = compassError + 360
+				
+				// Speed of Rover, projected on the speed of the Leader
+				var leaderSpeed : Double = `Math.hypot(`&leaderXd&`,`&leaderYd&`)`
+				var roverProjectedSpeed : Double = 0
+				if (leaderSpeed < 0.01) roverProjectedSpeed = `Math.hypot(`&roverXd&`,`&roverYd&`)`
+				else roverProjectedSpeed = (roverXd*leaderXd + roverYd*leaderYd)/leaderSpeed
+				
+				Estimator!SystemState(compassError, roverProjectedSpeed, leaderSpeed, distance)
+			end
+			
+			transition -> Estimate
+			event t : Timer?timer_timeout
+			guard (t.id == 3)
+		}
+		
+		internal event estimates : RoverEstimator?RoverState
+		action do
+			hasRover = true
+			roverX = estimates.x
+			roverY = estimates.y
+			roverCompass = estimates.phi
+			roverXd = estimates.xd
+			roverYd = estimates.yd
+		end
+		
+		internal event estimates : LeaderEstimator?LeaderState
+		action do
+			hasLeader = true
+			leaderX = estimates.x
+			leaderY = estimates.y
+			leaderXd = estimates.xd
+			leaderYd = estimates.yd
+		end
+	}
+	
+}

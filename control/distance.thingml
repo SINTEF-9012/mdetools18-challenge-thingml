@@ -1,0 +1,46 @@
+import "control.thingml"
+import "../estimators/parameters.thingml"
+import "../lib/settings.thingml"
+
+/*
+ * A simple P-controller that tries to keep the distance from the Rover to the Leader at the sweet-spot
+ */
+thing DistanceController includes Controller, ParameterEstimatorClient, SettingsClient {
+	
+	property P : Double = 50
+	property MaxInput : Double = 100
+	
+	property SweetSpot : Double = 0
+	
+	statechart Controller init WaitForSettings {
+		state WaitForSettings {
+			transition -> Distance
+			event settings : Loaded?Settings
+			action do
+				var maxDistance : Double = settings.tooFar
+				var minDistance : Double = settings.tooClose
+				SweetSpot = (minDistance + maxDistance)/2
+			end
+		}
+		
+		state Distance {
+			property DistanceError : Double = 0
+			
+			internal event systemstate : Estimator?SystemState
+			action do
+				DistanceError = systemstate.Distance - SweetSpot
+			end
+			
+			internal event power : In?Power
+			action do
+				var input : Double = DistanceError * P
+				if (input > MaxInput) input = MaxInput
+				if (input < -MaxInput) input = -MaxInput
+				
+				var inputI : Integer = `Math.round(`& input &`)`
+				Out!Power(power.left + inputI, power.right + inputI)
+			end
+		}
+	}
+	
+}

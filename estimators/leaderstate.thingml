@@ -1,0 +1,107 @@
+import "datatypes.thingml" from stl
+import "differentiation.thingml"
+import "../lib/timer.thingml"
+import "../coms/communicator.thingml"
+
+thing fragment LeaderStateEstimatorMsgs {
+	message LeaderState(
+		x : Double,
+		xd : Double,
+		y : Double,
+		yd : Double
+	)
+}
+
+thing fragment LeaderStateEstimatorClient includes LeaderStateEstimatorMsgs {
+	required port LeaderEstimator {
+		receives LeaderState
+	}
+}
+
+thing LeaderStateEstimator includes LeaderStateEstimatorMsgs, StateEstimator, TimerClient, LeaderClient {
+	provided port Estimator {
+		sends LeaderState
+	}
+	
+	property SamplesX : Double[N]
+	property SamplesY : Double[N]
+	
+	statechart Estimator init WaitForReady {
+		state WaitForReady {
+			transition -> WaitForStarted
+			event Leader?Ready
+			action Leader!LeaderStart()
+		}
+		
+		state WaitForStarted {
+			transition -> Bootstrap
+			event Leader?SimulationStarted
+		}
+		
+		// Fill up the samples before we start estimating
+		composite state Bootstrap init GetPosition {
+			property SamplesRead : Integer = 0
+			
+			on entry println "Bootstrapping Leader estimator..."
+			
+			state GetPosition {
+				on entry Leader!GetLeaderPosition()
+				
+				transition -> Wait
+				event pos : Leader?LeaderPosition
+				action do
+					PushItem(SamplesX, pos.x)
+					PushItem(SamplesY, pos.y)
+				end
+			}
+			
+			state Wait {
+				on entry do
+					SamplesRead ++
+					Timer!timer_start(2, SampleRate)
+				end
+				
+				transition -> GetPosition
+				event t : Timer?timer_timeout
+				guard (t.id == 2 and SamplesRead < N)
+			}
+			
+			transition -> Estimate
+			event t : Timer?timer_timeout
+			guard (t.id == 2)
+		}
+		
+		composite state Estimate init FiniteDifferences {
+			on entry println "Estimating Leader state..."
+			
+			state FiniteDifferences {
+				on entry do
+					Timer!timer_start(2, SampleRate)
+					
+					var x : Double = SamplesX[N-1]
+					var xd : Double = Differentiate(SamplesX, FirstOrderCoeffs)
+					
+					var y : Double = SamplesY[N-1]
+					var yd : Double = Differentiate(SamplesY, FirstOrderCoeffs)
+					
+					Estimator!LeaderState(x, xd, y, yd)
+				end
+				
+				transition -> GetPosition
+				event t : Timer?timer_timeout
+				guard (t.id == 2)
+			}
+			
+			state GetPosition {
+				on entry Leader!GetLeaderPosition()
+				
+				transition -> FiniteDifferences
+				event pos : Leader?LeaderPosition
+				action do
+					PushItem(SamplesX, pos.x)
+					PushItem(SamplesY, pos.y)
+				end
+			}
+		}
+	}
+}

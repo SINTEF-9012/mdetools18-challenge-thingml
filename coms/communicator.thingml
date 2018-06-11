@@ -1,0 +1,209 @@
+import "../lib/settings.thingml"
+import "socket.thingml"
+
+thing fragment CommunicatorMsgs {
+	message Ready()
+	message SimulationStarted()
+	
+	message SetRoverLRPower(left : Integer, right : Integer)
+	message SetBrake(brake : Integer)
+	message GetRoverPosition()
+	message GetRoverCompass()
+	message RoverPosition(x : Double, y : Double)
+	message RoverCompass(phi : Double)
+	
+	message LeaderStart()
+	message GetLeaderPosition()
+	message GetLeaderDistance()
+	message LeaderPosition(x : Double, y : Double)
+	message LeaderDistance(d : Double)
+}
+
+thing fragment RoverClient includes CommunicatorMsgs {
+	required port Rover {
+		sends SetRoverLRPower, SetBrake, GetRoverPosition, GetRoverCompass
+		receives RoverPosition, RoverCompass
+		receives Ready, SimulationStarted
+	}
+}
+
+thing fragment LeaderClient includes CommunicatorMsgs {
+	required port Leader {
+		sends LeaderStart, GetLeaderPosition, GetLeaderDistance
+		receives LeaderPosition, LeaderDistance
+		receives Ready, SimulationStarted
+	}
+}
+
+thing Communicator includes SettingsClient, SocketMsgs, CommunicatorMsgs {
+	
+	required port ControlSocket {
+		sends Open, Out
+		receives WasOpened, WasClosed, In
+	}
+	
+	required port ObservationSocket {
+		sends Open, Out
+		receives WasOpened, WasClosed, In
+	}
+	
+	provided port Rover {
+		sends Ready, SimulationStarted
+		sends RoverPosition, RoverCompass
+		receives SetRoverLRPower, SetBrake, GetRoverPosition, GetRoverCompass
+	}
+	
+	provided port Leader {
+		sends Ready, SimulationStarted
+		sends LeaderPosition, LeaderDistance
+		receives LeaderStart, GetLeaderPosition, GetLeaderDistance
+	}
+	
+	statechart Comms init WaitForSettings {
+		property controlPort : Integer
+		property observationPort : Integer
+		property simulationIP : PrimitiveString
+		
+		state WaitForSettings {
+			transition -> OpenControlPort
+			event settings : Loaded?Settings
+			action do
+				controlPort = settings.controlPort
+				observationPort = settings.observationPort
+				simulationIP = settings.simulationIP
+			end
+		}
+		
+		state OpenControlPort {
+			on entry ControlSocket!Open(simulationIP, controlPort)
+			transition -> OpenObservationPort event ControlSocket?WasOpened
+		}
+		
+		state OpenObservationPort {
+			on entry ObservationSocket!Open(simulationIP, observationPort)
+			transition -> Communicate event ObservationSocket?WasOpened
+		}
+		
+		composite state Communicate init Ready {
+			state Ready {
+				on entry do
+					println "Ready to communicate!"
+					Leader!Ready()
+					Leader!Ready()
+				end
+			}
+			
+			region Rover init WaitForCommand {
+				state WaitForCommand {
+					transition -> WaitForCommand
+					event power : Rover?SetRoverLRPower
+					action ControlSocket!Out("Rover,setLRPower("+power.left+","+power.right+")")
+					
+					transition -> WaitForCommand
+					event brake : Rover?SetBrake
+					action ControlSocket!Out("Rover,brake("+brake.brake+")")
+					
+					transition -> WaitForPosition
+					event Rover?GetRoverPosition
+					action ControlSocket!Out("Rover,GPS()")
+					
+					transition -> WaitForCompass
+					event Rover?GetRoverCompass
+					action ControlSocket!Out("Rover,getCompass()")
+				}
+				
+				state WaitForPosition {
+					transition -> WaitForCommand
+					event response : ControlSocket?In
+					action do `
+						String[] parts = `&response.line&`.split(",|;");
+						if (parts.length == 3 && parts[0].equals("Rover")) {
+							double x = Double.parseDouble(parts[1]);
+							double y = Double.parseDouble(parts[2]);
+							` Rover!RoverPosition(`x`, `y`) `
+						} else {
+							System.err.println("Something wrong on line: "+`&response.line&`);
+							System.err.println("Expected: Rover, <double>, <double>;");
+							System.exit(3);
+						}
+					` end
+				}
+				
+				state WaitForCompass {
+					transition -> WaitForCommand
+					event response : ControlSocket?In
+					action do `
+						String[] parts = `&response.line&`.split(",|;");
+						if (parts.length == 2 && parts[0].equals("Rover")) {
+							double phi = Double.parseDouble(parts[1]);
+							` Rover!RoverCompass(`phi`) `
+						} else {
+							System.err.println("Something wrong on line: "+`&response.line&`);
+							System.err.println("Expected: Rover, <double>;");
+							System.exit(3);
+						}
+					` end
+				}
+			}
+			
+			region Leader init WaitForCommand {
+				state WaitForCommand {
+					transition -> WaitForSimulationStarted
+					event Leader?LeaderStart
+					action ObservationSocket!Out("ready")
+					
+					transition -> WaitForPosition
+					event Leader?GetLeaderPosition
+					action ObservationSocket!Out("Leader,GPS()")
+					
+					transition -> WaitForDistance
+					event Leader?GetLeaderDistance
+					action ObservationSocket!Out("Leader,Distance()")
+				}
+				
+				state WaitForSimulationStarted {
+					transition -> WaitForCommand
+					event ObservationSocket?In
+					action do
+						Rover!SimulationStarted()
+						Leader!SimulationStarted()
+					end
+					// TODO: Perhaps check the line?
+				}
+				
+				state WaitForPosition {
+					transition -> WaitForCommand
+					event response : ObservationSocket?In
+					action do `
+						String[] parts = `&response.line&`.split(",|;");
+						if (parts.length == 3 && parts[0].equals("Leader")) {
+							double x = Double.parseDouble(parts[1]);
+							double y = Double.parseDouble(parts[2]);
+							` Leader!LeaderPosition(`x`, `y`) `
+						} else {
+							System.err.println("Something wrong on line: "+`&response.line&`);
+							System.err.println("Expected: Leader, <double>, <double>;");
+							System.exit(3);
+						}
+					` end
+				}
+				
+				state WaitForDistance {
+					transition -> WaitForCommand
+					event response : ObservationSocket?In
+					action do `
+						String[] parts = `&response.line&`.split(",|;");
+						if (parts.length == 2 && parts[0].equals("Leader")) {
+							double d = Double.parseDouble(parts[1]);
+							` Leader!LeaderDistance(`d`) `
+						} else {
+							System.err.println("Something wrong on line: "+`&response.line&`);
+							System.err.println("Expected: Leader, <double>;");
+							System.exit(3);
+						}
+					` end
+				}
+			}
+		}
+	}
+}

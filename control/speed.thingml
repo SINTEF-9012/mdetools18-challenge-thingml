@@ -1,0 +1,43 @@
+import "control.thingml"
+import "../estimators/parameters.thingml"
+
+/*
+ * A PI-controller that tries to match the speed of the Rover with the speed of the Leader
+ */
+
+thing SpeedController includes Controller, ParameterEstimatorClient {
+	
+	property P : Double = 100
+	property I : Double = 5
+	property MaxInput : Double = 100
+	property AntiWindup : Double = 10
+	
+	statechart Controller init Speed {
+		property SpeedError : Double = 0
+		property SpeedErrorI : Double = 0
+		
+		state Speed {
+			internal event systemstate : Estimator?SystemState
+			action do
+				// Integral
+				SpeedErrorI = SpeedErrorI + SpeedError
+				// Anti wind-up
+				if (SpeedErrorI > AntiWindup) SpeedErrorI = AntiWindup
+				if (SpeedErrorI < -AntiWindup) SpeedErrorI = -AntiWindup
+				// Proportional
+				SpeedError = systemstate.LeaderSpeed-systemstate.RoverProjectedSpeed
+			end
+			
+			internal event power : In?Power
+			action do
+				var input : Double = SpeedError * P + SpeedErrorI * I
+				if (input > MaxInput) input = MaxInput
+				if (input < -MaxInput) input = -MaxInput
+				
+				var inputI : Integer =  `Math.round(`& input &`)`
+			
+				Out!Power(power.left + inputI, power.right + inputI)
+			end
+		}
+	}
+}

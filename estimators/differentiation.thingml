@@ -1,0 +1,49 @@
+import "datatypes.thingml" from stl
+
+thing fragment StateEstimator {
+	property SampleRate : UInt32 = 250
+	
+	// Finite difference method
+	property FirstOrderCoeffs : Double[N]
+	property SecondOrderCoeffs : Double[N]
+	
+	/*
+	readonly property N : Integer = 5
+	set FirstOrderCoeffs[0] =  0.0833333333
+	set FirstOrderCoeffs[1] = -0.6666666667
+	set FirstOrderCoeffs[2] =  0
+	set FirstOrderCoeffs[3] =  0.6666666667
+	set FirstOrderCoeffs[4] = -0.0833333333
+	set SecondOrderCoeffs[0] = -0.0833333333
+	set SecondOrderCoeffs[1] =  1.3333333333
+	set SecondOrderCoeffs[2] = -2.5
+	set SecondOrderCoeffs[3] =  1.3333333333
+	set SecondOrderCoeffs[4] = -0.0833333333
+	*/
+	readonly property N : Integer = 3
+	set FirstOrderCoeffs[0] = -0.5
+	set FirstOrderCoeffs[1] =  0
+	set FirstOrderCoeffs[2] =  0.5
+	set SecondOrderCoeffs[0] =  1
+	set SecondOrderCoeffs[1] = -2
+	set SecondOrderCoeffs[2] =  1
+	
+	function PushItem(array : Double[N], value : Double) do
+		var n : Integer = 0
+		while (n < N-1) do
+			array[n] = array[n+1]
+			n++
+		end
+		array[N-1] = value
+	end
+	
+	function Differentiate(samples : Double[N], coeffs : Double[N]) : Double do
+		var n : Integer = 0
+		var estimate : Double = 0
+		while (n < N) do
+			estimate = estimate + samples[n]*coeffs[n]
+			n++
+		end
+		return estimate
+	end
+}

@@ -1,0 +1,35 @@
+import "control.thingml"
+import "../estimators/parameters.thingml"
+
+/*
+ * A simple P-controller that tries to turn the Rover towards the position of the Leader
+ */
+thing HeadingController includes Controller, ParameterEstimatorClient
+@java_import `
+	import java.lang.Math;
+`
+{
+	property P : Double = 10
+	property MaxDiff : Double = 100
+	
+	statechart Controller init Heading {
+		state Heading {
+			property CompassError : Double = 0
+			
+			internal event systemstate : Estimator?SystemState
+			action do
+				CompassError = systemstate.CompassError
+			end
+			
+			internal event power : In?Power
+			action do
+				var diff : Double = CompassError * P
+				if (diff > MaxDiff) diff = MaxDiff
+				if (diff < -MaxDiff) diff = -MaxDiff
+				
+				var offset : Integer = `Math.round(`& diff / 2 &`)`
+				Out!Power(power.left + offset, power.right - offset)
+			end
+		}
+	}
+}

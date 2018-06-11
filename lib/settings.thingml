@@ -5,14 +5,20 @@ datatype PrimitiveString<0>
 
 thing fragment SettingsMsgs {
 	message Settings(
-		controlPort : Integer,
-		observationPort : Integer,
+		controlPort : Long,
+		observationPort : Long,
 		simulationIP : PrimitiveString,
-		runTime : Integer,
-		tooClose : Integer,
-		tooFar : Integer,
-		sampleRate : Integer
+		runTime : Long,
+		tooClose : Long,
+		tooFar : Long,
+		sampleRate : Long
 	)
+}
+
+thing fragment SettingsClient includes SettingsMsgs {
+	required port Loaded {
+		receives Settings
+	}
 }
 
 thing SettingsParser includes SettingsMsgs
@@ -30,13 +36,13 @@ thing SettingsParser includes SettingsMsgs
 	
 	statechart Loader init LoadConfiguration {
 		state LoadConfiguration {
-			property controlPort : Integer = 0
-			property observationPort : Integer = 0
+			property controlPort : Long= 0
+			property observationPort : Long = 0
 			property simulationIP : PrimitiveString = ""
-			property runTime : Integer = 0
-			property tooClose : Integer = 0
-			property tooFar : Integer = 0
-			property sampleRate : Integer = 0
+			property runTime : Long = 0
+			property tooClose : Long = 0
+			property tooFar : Long = 0
+			property sampleRate : Long = 0
 			
 			on entry do
 				`

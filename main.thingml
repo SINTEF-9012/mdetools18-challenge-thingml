@@ -1,9 +1,21 @@
-import "settings.thingml"
-import "communicator.thingml"
+import "lib/timer.thingml"
+import "lib/settings.thingml"
+import "coms/communicator.thingml"
+import "estimators/roverstate.thingml"
+import "estimators/leaderstate.thingml"
+import "estimators/parameters.thingml"
+import "logger.thingml"
+import "control/control.thingml"
+import "control/speed.thingml"
+import "control/heading.thingml"
+import "control/distance.thingml"
 
 configuration RoverController {
+	// Utilities
+	instance timer : TimerJava
 	instance parser : SettingsParser
 	
+	// Communications with simulator
 	instance control : Socket
 	instance observation : Socket
 	
@@ -11,4 +23,47 @@ configuration RoverController {
 	connector communicator.Loaded => parser.Loaded
 	connector communicator.ControlSocket => control.Socket
 	connector communicator.ObservationSocket => observation.Socket
+	
+	// State estimation
+	instance roverestimator : RoverStateEstimator
+	connector roverestimator.Timer => timer.timer
+	connector roverestimator.Rover => communicator.Rover
+	
+	instance leaderestimator : LeaderStateEstimator
+	connector leaderestimator.Timer => timer.timer
+	connector leaderestimator.Leader => communicator.Leader
+	
+	instance parameterestimator : ParameterEstimator
+	connector parameterestimator.Timer => timer.timer
+	connector parameterestimator.RoverEstimator => roverestimator.Estimator
+	connector parameterestimator.LeaderEstimator => leaderestimator.Estimator
+	
+	// Control system
+	instance muxer : ControllerMuxer
+	connector muxer.Timer => timer.timer
+	connector muxer.Loaded => parser.Loaded
+	connector muxer.Rover => communicator.Rover
+	
+	instance speedController : SpeedController
+	connector speedController.Estimator => parameterestimator.Estimator
+	connector speedController.In => muxer.Out
+	
+	instance headingController : HeadingController
+	connector headingController.Estimator => parameterestimator.Estimator
+	connector headingController.In => speedController.Out
+	
+	instance distanceController : DistanceController
+	connector distanceController.Loaded => parser.Loaded
+	connector distanceController.Estimator => parameterestimator.Estimator
+	connector distanceController.In => headingController.Out
+	
+	connector muxer.In => distanceController.Out
+	
+	// Tuning
+	instance logger : RoverEstimatorLogger
+	connector logger.RoverEstimator => roverestimator.Estimator
+	connector logger.Rover => communicator.Rover
+	set logger.Enabled = false
+	set logger.LeftPower = 100
+	set logger.RightPower = 100
 }

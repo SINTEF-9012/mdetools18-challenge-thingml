@@ -1,0 +1,63 @@
+import "estimators/roverstate.thingml"
+import "coms/communicator.thingml"
+
+object JavaPrintWriter @java_type "java.io.PrintWriter"
+
+thing RoverEstimatorLogger includes RoverStateEstimatorClient, RoverClient
+@java_import `
+	import java.io.PrintWriter;
+	import java.io.IOException;
+`
+@java_features `
+	PrintWriter writer;
+`
+{
+	readonly property Enabled : Boolean = false
+	
+	property LeftPower : Integer = 0
+	property RightPower : Integer = 0
+	
+	statechart Logger init NoLog {
+		state NoLog {
+			transition -> Log
+			guard (Enabled)
+		}
+		
+		state Log {
+			on entry `
+				try {
+					writer = new PrintWriter("roverstate.csv");
+					writer.println("x, xd, xdd, y, yd, ydd, phi, phid, phidd");
+				} catch (IOException e) {
+					System.err.println("Cannot open roverstate.csv");
+				}
+			`
+			
+			internal event estimates : RoverEstimator?RoverState
+			action do `
+				if (writer != null) {
+					writer.print(`&estimates.x&`);
+					writer.print(", ");
+					writer.print(`&estimates.xd&`);
+					writer.print(", ");
+					writer.print(`&estimates.xdd&`);
+					writer.print(", ");
+					writer.print(`&estimates.y&`);
+					writer.print(", ");
+					writer.print(`&estimates.yd&`);
+					writer.print(", ");
+					writer.print(`&estimates.ydd&`);
+					writer.print(", ");
+					writer.print(`&estimates.phi&`);
+					writer.print(", ");
+					writer.print(`&estimates.phid&`);
+					writer.print(", ");
+					writer.print(`&estimates.phidd&`);
+					writer.println();
+				}
+			` Rover!SetRoverLRPower(LeftPower, RightPower)
+			end
+		}
+	}
+	
+}
