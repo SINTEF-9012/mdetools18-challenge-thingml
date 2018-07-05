@@ -4,8 +4,15 @@ thing fragment StateEstimator {
 	property SampleRate : UInt32 = 250
 	
 	// Finite difference method
+	readonly property N : Integer = 3
 	property FirstOrderCoeffs : Double[N]
 	property SecondOrderCoeffs : Double[N]
+	set FirstOrderCoeffs[0] = -0.5
+	set FirstOrderCoeffs[1] =  0
+	set FirstOrderCoeffs[2] =  0.5
+	set SecondOrderCoeffs[0] =  1
+	set SecondOrderCoeffs[1] = -2
+	set SecondOrderCoeffs[2] =  1
 	
 	/*
 	readonly property N : Integer = 5
@@ -20,13 +27,7 @@ thing fragment StateEstimator {
 	set SecondOrderCoeffs[3] =  1.3333333333
 	set SecondOrderCoeffs[4] = -0.0833333333
 	*/
-	readonly property N : Integer = 3
-	set FirstOrderCoeffs[0] = -0.5
-	set FirstOrderCoeffs[1] =  0
-	set FirstOrderCoeffs[2] =  0.5
-	set SecondOrderCoeffs[0] =  1
-	set SecondOrderCoeffs[1] = -2
-	set SecondOrderCoeffs[2] =  1
+	
 	
 	function PushItem(array : Double[N], value : Double) do
 		var n : Integer = 0

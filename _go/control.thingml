@@ -1,0 +1,6 @@
+import "../_lib/os.thingml"
+
+import "../control/control.thingml"
+
+thing GoControllerMuxer includes ControllerMuxer, GoOS {
+}

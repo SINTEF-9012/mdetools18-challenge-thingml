@@ -1,0 +1,6 @@
+import "../_lib/math.thingml"
+
+import "../control/distance.thingml"
+
+thing GoDistanceController includes DistanceController, GoMath {
+}

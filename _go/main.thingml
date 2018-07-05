@@ -1,0 +1,64 @@
+import "../estimators/roverstate.thingml"
+import "../estimators/leaderstate.thingml"
+
+import "timer.thingml"
+import "settings.thingml"
+import "socket.thingml"
+import "communicator.thingml"
+import "parameters.thingml"
+import "control.thingml"
+import "distance.thingml"
+import "speed.thingml"
+import "heading.thingml"
+
+configuration RoverControllerGo
+@go_import `time`
+{
+	// Utilities
+	instance timer : GoTimer
+	instance parser : GoSettingsParser
+	
+	// Communications with simulator
+	instance control : GoSocket
+	instance observation : GoSocket
+	
+	instance communicator : GoCommunicator
+	connector communicator.Loaded => parser.Loaded
+	connector communicator.ControlSocket => control.Socket
+	connector communicator.ObservationSocket => observation.Socket
+	
+	// State estimation
+	instance roverestimator : RoverStateEstimator
+	connector roverestimator.Timer => timer.timer
+	connector roverestimator.Rover => communicator.Rover
+	
+	instance leaderestimator : LeaderStateEstimator
+	connector leaderestimator.Timer => timer.timer
+	connector leaderestimator.Leader => communicator.Leader
+	
+	instance parameterestimator : GoParameterEstimator
+	connector parameterestimator.Timer => timer.timer
+	connector parameterestimator.RoverEstimator => roverestimator.Estimator
+	connector parameterestimator.LeaderEstimator => leaderestimator.Estimator
+	
+	// Control system
+	instance muxer : GoControllerMuxer
+	connector muxer.Timer => timer.timer
+	connector muxer.Loaded => parser.Loaded
+	connector muxer.Rover => communicator.Rover
+	
+	instance speedController : GoSpeedController
+	connector speedController.Estimator => parameterestimator.Estimator
+	connector speedController.In => muxer.Out
+	
+	instance headingController : GoHeadingController
+	connector headingController.Estimator => parameterestimator.Estimator
+	connector headingController.In => speedController.Out
+	
+	instance distanceController : GoDistanceController
+	connector distanceController.Loaded => parser.Loaded
+	connector distanceController.Estimator => parameterestimator.Estimator
+	connector distanceController.In => headingController.Out
+	
+	connector muxer.In => distanceController.Out
+}

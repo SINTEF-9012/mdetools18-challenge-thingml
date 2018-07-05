@@ -1,4 +1,6 @@
 import "datatypes.thingml" from stl
+import "../_lib/os.thingml"
+
 import "../lib/timer.thingml"
 import "../coms/communicator.thingml"
 import "../lib/settings.thingml"
@@ -20,7 +22,7 @@ thing fragment Controller includes ControlMsgs {
 	}
 }
 
-thing ControllerMuxer includes Controller, TimerClient, RoverClient, SettingsClient {
+thing fragment ControllerMuxer includes Controller, TimerClient, RoverClient, SettingsClient, OS {
 	
 	property ControlRate : UInt32 = 50
 	property RunTime : UInt32 = 60000
@@ -29,15 +31,14 @@ thing ControllerMuxer includes Controller, TimerClient, RoverClient, SettingsCli
 		state WaitForSettings {
 			transition -> WaitForStarted
 			event settings : Loaded?Settings
-			action RunTime = settings.runTime
+			action RunTime = settings.runTime as UInt32
 		}
 		
 		state WaitForStarted {
 			transition -> Control
 			event Rover?SimulationStarted
 			action do
-				Timer!timer_start(11, RunTime)
-				println "STARTING TIMER ", RunTime
+				Timer!timer_start(11, RunTime+1)
 			end
 		}
 		
@@ -94,7 +95,7 @@ thing ControllerMuxer includes Controller, TimerClient, RoverClient, SettingsCli
 				println "Simulation finished, braking!"
 				Rover!SetBrake(100)
 				println "Bye :)"
-				`System.exit(0);`
+				Exit(0)
 			end
 		}
 	}

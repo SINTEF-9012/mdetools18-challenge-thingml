@@ -1,3 +1,6 @@
+import "../_lib/strings.thingml"
+import "../_lib/os.thingml"
+
 import "../lib/settings.thingml"
 import "socket.thingml"
 
@@ -35,16 +38,16 @@ thing fragment LeaderClient includes CommunicatorMsgs {
 	}
 }
 
-thing Communicator includes SettingsClient, SocketMsgs, CommunicatorMsgs {
+thing fragment Communicator includes SettingsClient, SocketMsgs, CommunicatorMsgs, Strings, OS {
 	
 	required port ControlSocket {
 		sends Open, Out
-		receives WasOpened, WasClosed, In
+		receives WasOpened/*, WasClosed */, In
 	}
 	
 	required port ObservationSocket {
 		sends Open, Out
-		receives WasOpened, WasClosed, In
+		receives WasOpened/*, WasClosed */, In
 	}
 	
 	provided port Rover {
@@ -60,9 +63,9 @@ thing Communicator includes SettingsClient, SocketMsgs, CommunicatorMsgs {
 	}
 	
 	statechart Comms init WaitForSettings {
-		property controlPort : Integer
-		property observationPort : Integer
-		property simulationIP : PrimitiveString
+		property controlPort : Long
+		property observationPort : Long
+		property simulationIP : StringD
 		
 		state WaitForSettings {
 			transition -> OpenControlPort
@@ -84,8 +87,8 @@ thing Communicator includes SettingsClient, SocketMsgs, CommunicatorMsgs {
 			transition -> Communicate event ObservationSocket?WasOpened
 		}
 		
-		composite state Communicate init Ready {
-			state Ready {
+		composite state Communicate init Ready @ignore "sink" {
+			state Ready @ignore "sink" {
 				on entry do
 					println "Ready to communicate!"
 					Leader!Ready()
@@ -97,11 +100,11 @@ thing Communicator includes SettingsClient, SocketMsgs, CommunicatorMsgs {
 				state WaitForCommand {
 					transition -> WaitForCommand
 					event power : Rover?SetRoverLRPower
-					action ControlSocket!Out("Rover,setLRPower("+power.left+","+power.right+")")
+					action ControlSocket!Out("Rover,setLRPower("+FormatInteger(power.left)+","+FormatInteger(power.right)+")")
 					
 					transition -> WaitForCommand
 					event brake : Rover?SetBrake
-					action ControlSocket!Out("Rover,brake("+brake.brake+")")
+					action ControlSocket!Out("Rover,brake("+FormatInteger(brake.brake)+")")
 					
 					transition -> WaitForPosition
 					event Rover?GetRoverPosition
@@ -115,34 +118,36 @@ thing Communicator includes SettingsClient, SocketMsgs, CommunicatorMsgs {
 				state WaitForPosition {
 					transition -> WaitForCommand
 					event response : ControlSocket?In
-					action do `
-						String[] parts = `&response.line&`.split(",|;");
-						if (parts.length == 3 && parts[0].equals("Rover")) {
-							double x = Double.parseDouble(parts[1]);
-							double y = Double.parseDouble(parts[2]);
-							` Rover!RoverPosition(`x`, `y`) `
-						} else {
-							System.err.println("Something wrong on line: "+`&response.line&`);
-							System.err.println("Expected: Rover, <double>, <double>;");
-							System.exit(3);
-						}
-					` end
+					action do
+						var parts : StringD[4]
+						SplitInto(response.line, ",|;", parts)
+						if (Equals(parts[0], "Rover")) do
+							var x : Double = ParseDouble(parts[1])
+							var y : Double = ParseDouble(parts[2])
+							Rover!RoverPosition(x, y)
+						end else do
+							errorln "Something wrong on line: ", response.line
+							errorln "Expected: Rover, <double>, <double>;"
+							Exit(3)
+						end
+					end
 				}
 				
 				state WaitForCompass {
 					transition -> WaitForCommand
 					event response : ControlSocket?In
-					action do `
-						String[] parts = `&response.line&`.split(",|;");
-						if (parts.length == 2 && parts[0].equals("Rover")) {
-							double phi = Double.parseDouble(parts[1]);
-							` Rover!RoverCompass(`phi`) `
-						} else {
-							System.err.println("Something wrong on line: "+`&response.line&`);
-							System.err.println("Expected: Rover, <double>;");
-							System.exit(3);
-						}
-					` end
+					action do
+						var parts : StringD[3]
+						SplitInto(response.line, ",|;", parts)
+						if (Equals(parts[0], "Rover")) do
+							var phi : Double = ParseDouble(parts[1])
+							Rover!RoverCompass(phi)
+						end else do
+							errorln "Something wrong on line: ", response.line
+							errorln "Expected: Rover, <double>;"
+							Exit(3)
+						end
+					end
 				}
 			}
 			
@@ -174,34 +179,36 @@ thing Communicator includes SettingsClient, SocketMsgs, CommunicatorMsgs {
 				state WaitForPosition {
 					transition -> WaitForCommand
 					event response : ObservationSocket?In
-					action do `
-						String[] parts = `&response.line&`.split(",|;");
-						if (parts.length == 3 && parts[0].equals("Leader")) {
-							double x = Double.parseDouble(parts[1]);
-							double y = Double.parseDouble(parts[2]);
-							` Leader!LeaderPosition(`x`, `y`) `
-						} else {
-							System.err.println("Something wrong on line: "+`&response.line&`);
-							System.err.println("Expected: Leader, <double>, <double>;");
-							System.exit(3);
-						}
-					` end
+					action do
+						var parts : StringD[4]
+						SplitInto(response.line, ",|;", parts)
+						if (Equals(parts[0], "Leader")) do
+							var x : Double = ParseDouble(parts[1])
+							var y : Double = ParseDouble(parts[2])
+							Leader!LeaderPosition(x, y)
+						end else do
+							errorln "Something wrong on line: ", response.line
+							errorln "Expected: Leader, <double>, <double>;"
+							Exit(3)
+						end 
+					end
 				}
 				
 				state WaitForDistance {
 					transition -> WaitForCommand
 					event response : ObservationSocket?In
-					action do `
-						String[] parts = `&response.line&`.split(",|;");
-						if (parts.length == 2 && parts[0].equals("Leader")) {
-							double d = Double.parseDouble(parts[1]);
-							` Leader!LeaderDistance(`d`) `
-						} else {
-							System.err.println("Something wrong on line: "+`&response.line&`);
-							System.err.println("Expected: Leader, <double>;");
-							System.exit(3);
-						}
-					` end
+					action do
+						var parts : StringD[3]
+						SplitInto(response.line, ",|;", parts)
+						if (Equals(parts[0], "Leader")) do
+							var d : Double = ParseDouble(parts[1])
+							Leader!LeaderDistance(d)
+						end else do
+							errorln "Something wrong on line: ", response.line
+							errorln "Expected: Leader, <double>;"
+							Exit(3)
+						end
+					end
 				}
 			}
 		}

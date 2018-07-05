@@ -1,71 +1,23 @@
+import "../_lib/strings.thingml"
+
 import "../lib/settings.thingml"
 
 thing fragment SocketMsgs {
-	message Open(ip : PrimitiveString, pport : Integer)
+	message Open(ip : StringD, pport : Long)
 	message WasOpened()
-	message WasClosed()
+	//message WasClosed()
 	
-	message Out(line : PrimitiveString)
-	message In(line : PrimitiveString)
+	message Out(line : StringD)
+	message In(line : StringD)
 }
 
-object BufferedReader @java_type "java.io.BufferedReader"
-object PrintWriter @java_type "java.io.PrintWriter"
-
-thing Socket includes SocketMsgs
-@java_import `
-	import java.io.BufferedReader;
-	import java.io.IOException;
-	import java.io.InputStreamReader;
-	import java.io.PrintWriter;
-`
+thing fragment Socket includes SocketMsgs
 {	
 	provided port Socket {
 		receives Open
-		sends WasOpened, WasClosed
+		sends WasOpened//, WasClosed
 		
 		receives Out
 		sends In
-	}
-	
-	property SocketIn : BufferedReader
-	property SocketOut : PrintWriter
-	
-	function ReadIncoming() @fork_thread "true" do `
-		try {
-			while (true) {
-				String line = `&SocketIn&`.readLine();
-				` Socket!In(`line`) `
-			}
-		} catch (IOException ex) {
-			System.err.println("Error reading from socket: "+ex);
-		}
-	` end
-	
-	statechart Socket init WaitForOpen {
-		state WaitForOpen {
-			transition -> IsOpen
-			event open : Socket?Open 
-			action do `
-				try {
-					java.net.Socket socket = new java.net.Socket(`&open.ip&`, `&open.pport&`);
-					` SocketIn = `new BufferedReader(new InputStreamReader(socket.getInputStream()))` `
-					` SocketOut = `new PrintWriter(socket.getOutputStream(), true)` `
-				} catch (IOException ex) {
-					System.err.println("Error opening socket: "+ex);
-					System.exit(2);
-				}
-			` end
-		}
-		
-		state IsOpen {
-			on entry do
-				ReadIncoming()
-				Socket!WasOpened()
-			end
-			
-			internal event out : Socket?Out
-			action ``&SocketOut&`.println(`&out.line&`);`
-		}
 	}
 }

@@ -1,25 +1,26 @@
-import "lib/timer.thingml"
-import "lib/settings.thingml"
-import "coms/communicator.thingml"
-import "estimators/roverstate.thingml"
-import "estimators/leaderstate.thingml"
-import "estimators/parameters.thingml"
-import "logger.thingml"
-import "control/control.thingml"
-import "control/speed.thingml"
-import "control/heading.thingml"
-import "control/distance.thingml"
+import "../estimators/roverstate.thingml"
+import "../estimators/leaderstate.thingml"
 
-configuration RoverController {
+import "timer.thingml"
+import "settings.thingml"
+import "socket.thingml"
+import "communicator.thingml"
+import "parameters.thingml"
+import "control.thingml"
+import "speed.thingml"
+import "heading.thingml"
+import "distance.thingml"
+
+configuration RoverControllerJava {
 	// Utilities
-	instance timer : TimerJava
-	instance parser : SettingsParser
+	instance timer : JavaTimer
+	instance parser : JavaSettingsParser
 	
 	// Communications with simulator
-	instance control : Socket
-	instance observation : Socket
+	instance control : JavaSocket
+	instance observation : JavaSocket
 	
-	instance communicator : Communicator
+	instance communicator : JavaCommunicator
 	connector communicator.Loaded => parser.Loaded
 	connector communicator.ControlSocket => control.Socket
 	connector communicator.ObservationSocket => observation.Socket
@@ -33,37 +34,29 @@ configuration RoverController {
 	connector leaderestimator.Timer => timer.timer
 	connector leaderestimator.Leader => communicator.Leader
 	
-	instance parameterestimator : ParameterEstimator
+	instance parameterestimator : JavaParameterEstimator
 	connector parameterestimator.Timer => timer.timer
 	connector parameterestimator.RoverEstimator => roverestimator.Estimator
 	connector parameterestimator.LeaderEstimator => leaderestimator.Estimator
 	
 	// Control system
-	instance muxer : ControllerMuxer
+	instance muxer : JavaControllerMuxer
 	connector muxer.Timer => timer.timer
 	connector muxer.Loaded => parser.Loaded
 	connector muxer.Rover => communicator.Rover
 	
-	instance speedController : SpeedController
+	instance speedController : JavaSpeedController
 	connector speedController.Estimator => parameterestimator.Estimator
 	connector speedController.In => muxer.Out
 	
-	instance headingController : HeadingController
+	instance headingController : JavaHeadingController
 	connector headingController.Estimator => parameterestimator.Estimator
 	connector headingController.In => speedController.Out
 	
-	instance distanceController : DistanceController
+	instance distanceController : JavaDistanceController
 	connector distanceController.Loaded => parser.Loaded
 	connector distanceController.Estimator => parameterestimator.Estimator
 	connector distanceController.In => headingController.Out
 	
 	connector muxer.In => distanceController.Out
-	
-	// Tuning
-	instance logger : RoverEstimatorLogger
-	connector logger.RoverEstimator => roverestimator.Estimator
-	connector logger.Rover => communicator.Rover
-	set logger.Enabled = false
-	set logger.LeftPower = 100
-	set logger.RightPower = 100
 }

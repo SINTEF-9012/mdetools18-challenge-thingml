@@ -1,0 +1,55 @@
+import "../coms/socket.thingml"
+
+object BufferedReader @java_type "java.io.BufferedReader"
+object PrintWriter @java_type "java.io.PrintWriter"
+
+thing JavaSocket includes Socket
+@java_import `
+	import java.io.BufferedReader;
+	import java.io.IOException;
+	import java.io.InputStreamReader;
+	import java.io.PrintWriter;
+`
+{
+	
+	property SocketIn : BufferedReader
+	property SocketOut : PrintWriter
+	
+	function ReadIncoming() @fork_thread "true" do `
+		try {
+			while (true) {
+				String line = `&SocketIn&`.readLine();
+				` Socket!In(`line`) `
+			}
+		} catch (IOException ex) {
+			System.err.println("Error reading from socket: "+ex);
+		}
+	` end
+	
+	statechart Socket init WaitForOpen {
+		state WaitForOpen {
+			transition -> IsOpen
+			event open : Socket?Open 
+			action do `
+				try {
+					java.net.Socket socket = new java.net.Socket(`&open.ip&`, `&open.pport&`);
+					` SocketIn = `new BufferedReader(new InputStreamReader(socket.getInputStream()))` `
+					` SocketOut = `new PrintWriter(socket.getOutputStream(), true)` `
+				} catch (IOException ex) {
+					System.err.println("Error opening socket: "+ex);
+					System.exit(2);
+				}
+			` end
+		}
+		
+		state IsOpen {
+			on entry do
+				ReadIncoming()
+				Socket!WasOpened()
+			end
+			
+			internal event out : Socket?Out
+			action ``&SocketOut&`.println(`&out.line&`);`
+		}
+	}
+}

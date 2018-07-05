@@ -1,0 +1,5 @@
+import "../estimators/parameters.thingml"
+
+thing JavaParameterEstimator includes ParameterEstimator, JavaMath {
+	
+}

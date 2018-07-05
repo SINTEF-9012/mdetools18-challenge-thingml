@@ -1,13 +1,11 @@
 import "datatypes.thingml" from stl
-
-datatype PrimitiveString<0>
-	@java_type "String";
+import "../_lib/strings.thingml"
 
 thing fragment SettingsMsgs {
 	message Settings(
 		controlPort : Long,
 		observationPort : Long,
-		simulationIP : PrimitiveString,
+		simulationIP : StringD,
 		runTime : Long,
 		tooClose : Long,
 		tooFar : Long,
@@ -21,64 +19,61 @@ thing fragment SettingsClient includes SettingsMsgs {
 	}
 }
 
-thing SettingsParser includes SettingsMsgs
-@java_import `
-	import java.io.FileReader;
-	import java.io.BufferedReader;
-	import java.io.IOException;
-`
+thing fragment SettingsParser includes SettingsMsgs, Strings
 {
-	property ConfigPath : String = "Challenge problem/Settings/config.txt"
+	property ConfigPath : StringD = "Challenge problem/Settings/config.txt"
 	
 	provided port Loaded {
 		sends Settings
 	}
 	
+	// Settings to load from the file
+	property controlPort : Long= 0
+	property observationPort : Long = 0
+	property simulationIP : StringD = ""
+	property runTime : Long = 0
+	property tooClose : Long = 0
+	property tooFar : Long = 0
+	property sampleRate : Long = 0
+	
+	function HandleLine(line : StringD) do
+		var option : StringD[2]
+		SplitInto(line, "=", option)
+		
+		if (Equals(option[0], "controlPort")) do
+			controlPort = ParseLong(option[1])
+			return
+		end
+		if (Equals(option[0], "observationPort")) do
+			observationPort = ParseLong(option[1])
+			return
+		end
+		if (Equals(option[0], "runTime")) do
+			runTime = ParseLong(option[1])
+			return
+		end
+		if (Equals(option[0], "tooClose")) do
+			tooClose = ParseLong(option[1])
+			return
+		end
+		if (Equals(option[0], "tooFar")) do
+			tooFar = ParseLong(option[1])
+			return
+		end
+		if (Equals(option[0], "sampleRate")) do
+			sampleRate = ParseLong(option[1])
+			return
+		end
+	
+	end
+	
+	abstract function ReadConfigFile(path : StringD)
+	
 	statechart Loader init LoadConfiguration {
-		state LoadConfiguration {
-			property controlPort : Long= 0
-			property observationPort : Long = 0
-			property simulationIP : PrimitiveString = ""
-			property runTime : Long = 0
-			property tooClose : Long = 0
-			property tooFar : Long = 0
-			property sampleRate : Long = 0
-			
+		state LoadConfiguration @ignore "sink" {
 			on entry do
-				`
-					try (BufferedReader br = new BufferedReader(new FileReader(`&ConfigPath&`))) {
-						for (String line = br.readLine(); line != null; line = br.readLine()) {
-							String[] option = line.split("=", 2);
-							switch (option[0]) {
-								case "controlPort":
-									` controlPort = `Integer.parseInt(option[1])` `
-									break;
-								case "observationPort":
-									` observationPort = `Integer.parseInt(option[1])` `
-									break;
-								case "simulationIP":
-									` simulationIP = `option[1]` `
-									break;
-								case "runTime":
-									` runTime = `Integer.parseInt(option[1])` `
-									break;
-								case "tooClose":
-									` tooClose = `Integer.parseInt(option[1])` `
-									break;
-								case "tooFar":
-									` tooFar = `Integer.parseInt(option[1])` `
-									break;
-								case "sampleRate":
-									` sampleRate = `Integer.parseInt(option[1])` `
-									break;
-							}
-						}
-						` Loaded!Settings(controlPort, observationPort, simulationIP, runTime, tooClose, tooFar, sampleRate) `
-					} catch (IOException e) {
-						System.err.println("Couldn't read config file: "+`&ConfigPath&`);
-						System.exit(1);
-					}
-				`
+				ReadConfigFile(ConfigPath)
+				Loaded!Settings(controlPort, observationPort, simulationIP, runTime, tooClose, tooFar, sampleRate)
 			end
 		}
 	}

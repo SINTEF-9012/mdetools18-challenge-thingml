@@ -1,0 +1,5 @@
+import "../control/heading.thingml"
+
+thing GoHeadingController includes HeadingController, GoMath
+{
+}

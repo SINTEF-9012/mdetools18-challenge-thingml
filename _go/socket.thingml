@@ -1,0 +1,64 @@
+import "../coms/socket.thingml"
+
+object BufReader @go_type "*bufio.Reader"
+object BufWriter @go_type "*bufio.Writer"
+
+thing GoSocket includes Socket
+@go_import `net`
+@go_import `strconv`
+@go_import `os`
+@go_import `fmt`
+@go_import `bufio`
+{
+	
+	property SocketIn : BufReader
+	property SocketOut : BufWriter
+	
+	function ReadIncoming() do `
+		for {
+			line, err := `&SocketIn&`.ReadString('\n')
+			if err != nil {
+				fmt.Fprint(os.Stderr, "Error reading from socket:", err)
+				os.Exit(2)
+			}
+			` Socket!In(`line[:len(line)-1]`) `
+		}
+	` end
+	
+	statechart Socket init WaitForOpen {
+		state WaitForOpen {
+			transition -> IsOpen
+			event open : Socket?Open 
+			action do `
+				conn, err := net.Dial("tcp", `&open.ip&`+":"+strconv.Itoa(int(`&open.pport&`)))
+				if err != nil {
+					fmt.Fprint(os.Stderr, "Error opening socket:", err)
+					os.Exit(2)
+				}
+				` SocketOut = `bufio.NewWriter(conn)` `
+				` SocketIn = `bufio.NewReader(conn)` `
+				go `ReadIncoming()`
+			` end
+		}
+		
+		state IsOpen {
+			on entry do
+				Socket!WasOpened()
+			end
+			
+			internal event out : Socket?Out
+			action do `
+				_, err := `&SocketOut&`.WriteString(`&out.line&`+"\n")
+				if err != nil {
+					fmt.Fprint(os.Stderr, "Error writing to socket:", err)
+					os.Exit(2)
+				}
+				err = `&SocketOut&`.Flush()
+				if err != nil {
+					fmt.Fprint(os.Stderr, "Error flushing socket:", err)
+					os.Exit(2)
+				}
+			` end
+		}
+	}
+}

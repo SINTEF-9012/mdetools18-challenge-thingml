@@ -1,0 +1,123 @@
+import "datatypes.thingml" from stl
+
+// TODO : This is a bit hackish
+datatype StringD<0>
+	@type_checker "String"
+	@java_type "String"
+	@go_type "string"
+;
+
+thing fragment Strings {
+	abstract function SplitInto(s : StringD, re : StringD, into : StringD[])
+	
+	abstract function Equals(left : StringD, right : StringD) : Boolean
+	
+	abstract function ParseFloat(s : StringD) : Float
+	abstract function ParseDouble(s : StringD) : Double
+	abstract function ParseInteger(s : StringD) : Integer
+	abstract function ParseLong(s : StringD) : Long
+	
+	abstract function FormatFloat(f : Float) : StringD
+	abstract function FormatDouble(d : Double) : StringD
+	abstract function FormatInteger(i : Integer) : StringD
+	abstract function FormatLong(l : Long) : StringD
+}
+
+thing fragment JavaStrings {
+	function SplitInto(s : StringD, re : StringD, into : StringD[]) do `
+		int n = `&into&`.length;
+		String[] parts = `&s&`.split(`&re&`, n);
+		for (int i = 0; i < parts.length && i < n; i++)
+			`&into&`[i] = parts[i];
+	` end
+	
+	function Equals(left : StringD, right : StringD) : Boolean do
+		return (``&left&`.equals(`&right&`)`) as Boolean
+	end
+	
+	function ParseFloat(s : StringD) : Float do
+		return (`Float.parseFloat(`&s&`)`) as Float
+	end
+	
+	function ParseDouble(s : StringD) : Double do
+		return (`Double.parseDouble(`&s&`)`) as Double
+	end
+	
+	function ParseInteger(s : StringD) : Integer do
+		return (`Short.parseShort(`&s&`)`) as Integer
+	end
+	
+	function ParseLong(s : StringD) : Long do
+		return (`Integer.parseInt(`&s&`)`) as Long
+	end
+	
+	function FormatFloat(f : Float) : StringD do
+		return ""+f
+	end
+	
+	function FormatDouble(d : Double) : StringD do
+		return ""+d
+	end
+	
+	function FormatInteger(i : Integer) : StringD do
+		return ""+i
+	end
+	
+	function FormatLong(l : Long) : StringD do
+		return ""+l
+	end
+}
+
+thing fragment GoStrings
+@go_import `regexp`
+@go_import `strconv`
+{
+	function SplitInto(s : StringD, re : StringD, into : StringD[]) do `
+		n := len(`&into&`)
+		parts := regexp.MustCompile(`&re&`).Split(`&s&`, n)
+		copy(`&into&`, parts)
+	` end
+	
+	function Equals(left : StringD, right : StringD) : Boolean do
+		return left == right
+	end
+	
+	function ParseFloat(s : StringD) : Float do
+		`f,_ := strconv.ParseFloat(`&s&`, 32)`
+		return `f` as Float
+	end
+	
+	function ParseDouble(s : StringD) : Double do
+		`d,_ := strconv.ParseFloat(`&s&`, 64)`
+		return `d` as Double
+	end
+	
+	function ParseInteger(s : StringD) : Integer do
+		`i,_ := strconv.ParseInt(`&s&`, 10, 16)`
+		return `i` as Integer
+	end
+	
+	function ParseLong(s : StringD) : Long do
+		`l,_ := strconv.ParseInt(`&s&`, 10, 32)`
+		return `l` as Long
+	end
+	
+	function FormatFloat(f : Float) : StringD do
+		return (`strconv.FormatFloat(`&f as Double&`, 'f', -1, 32)`) as StringD
+	end
+	
+	function FormatDouble(d : Double) : StringD do
+		return (`strconv.FormatFloat(`&d&`, 'f', -1, 64)`) as StringD
+	end
+	
+	function FormatInteger(i : Integer) : StringD do
+		return (`strconv.FormatInt(`&i as LongLong&`, 10)`) as StringD
+	end
+	
+	function FormatLong(l : Long) : StringD do
+		return (`strconv.FormatInt(`&l as LongLong&`, 10)`) as StringD
+	end
+}
+
+
+

@@ -1,0 +1,7 @@
+import "../_lib/strings.thingml"
+
+import "../coms/communicator.thingml"
+
+thing JavaCommunicator includes Communicator, JavaStrings, JavaOS {
+	
+}

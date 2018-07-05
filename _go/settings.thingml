@@ -1,0 +1,28 @@
+import "../_lib/strings.thingml"
+import "../lib/settings.thingml"
+
+thing GoSettingsParser includes SettingsParser, GoStrings
+@go_import `os`
+@go_import `bufio`
+@go_import `fmt`
+{
+	function ReadConfigFile(path : StringD) do `
+		file, err := os.Open(`&path&`)
+		if err != nil {
+			fmt.Fprint(os.Stderr, "Error opening file:", err)
+			os.Exit(1)
+		}
+		defer file.Close()
+		
+		scanner := bufio.NewScanner(file)
+		for scanner.Scan() {
+			` HandleLine(`scanner.Text()` as StringD) `
+		}
+		
+		err = scanner.Err()
+		if err != nil {
+			fmt.Fprint(os.Stderr, "Error reading file:", err)
+			os.Exit(1)
+		}
+	` end
+}

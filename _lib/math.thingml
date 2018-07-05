@@ -1,0 +1,56 @@
+import "datatypes.thingml" from stl
+
+
+thing fragment Math {
+	abstract function PI() : Double
+	
+	abstract function Hypot(x : Double, y : Double) : Double
+	
+	abstract function Atan2(y : Double, x : Double) : Double
+	
+	abstract function Round(d : Double) : Integer
+}
+
+thing fragment JavaMath
+@java_import `
+	import java.lang.Math;
+`
+{
+	function PI() : Double do
+		return `Math.PI` as Double
+	end
+	
+	function Hypot(x : Double, y : Double) : Double do
+		return (`Math.hypot(`&x&`,`&y&`)`) as Double
+	end
+	
+	function Atan2(y : Double, x : Double) : Double do
+		return (`Math.atan2(`&y&`,`&x&`)`) as Double
+	end
+	
+	function Round(d : Double) : Integer do
+		return (`Math.round(`& d &`)`) as Integer
+	end
+}
+
+
+thing fragment GoMath
+@go_import `math`
+{
+	function PI() : Double do
+		return `math.Pi` as Double
+	end
+	
+	function Hypot(x : Double, y : Double) : Double do
+		return (`math.Hypot(`&x&`,`&y&`)`) as Double
+	end
+	
+	function Atan2(y : Double, x : Double) : Double do
+		return (`math.Atan2(`&y&`,`&x&`)`) as Double
+	end
+
+	function Round(d : Double) : Integer do
+		return (`math.Round(`& d &`)`) as Integer
+	end
+}
+

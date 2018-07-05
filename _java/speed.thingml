@@ -1,0 +1,5 @@
+import "../control/speed.thingml"
+
+thing JavaSpeedController includes SpeedController, JavaMath
+{
+}

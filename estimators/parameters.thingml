@@ -1,3 +1,4 @@
+import "../_lib/math.thingml"
 import "../lib/timer.thingml"
 import "roverstate.thingml"
 import "leaderstate.thingml"
@@ -18,10 +19,7 @@ thing fragment ParameterEstimatorClient includes ParameterEstimatorMsgs {
 }
 
 
-thing ParameterEstimator includes ParameterEstimatorMsgs, TimerClient, RoverStateEstimatorClient, LeaderStateEstimatorClient
-@java_import `
-	import java.lang.Math;
-`
+thing fragment ParameterEstimator includes ParameterEstimatorMsgs, TimerClient, RoverStateEstimatorClient, LeaderStateEstimatorClient, Math
 {
 	provided port Estimator {
 		sends SystemState
@@ -54,10 +52,10 @@ thing ParameterEstimator includes ParameterEstimatorMsgs, TimerClient, RoverStat
 				Timer!timer_start(3, SampleRate)
 				
 				// Distance between Rover and Leader
-				var distance : Double = `Math.hypot(`&leaderX-roverX&`, `&leaderY-roverY&`)`
+				var distance : Double = Hypot(leaderX-roverX, leaderY-roverY)
 				
 				// Compass angle from Rover to Leader
-				var angle : Double = `Math.atan2(`&leaderY-roverY&`, `&leaderX-roverX&`)/Math.PI*180`
+				var angle : Double = Atan2(leaderY-roverY, leaderX-roverX)/PI()*180
 				var angleCompass : Double = 90-angle
 				if (angleCompass < 0) angleCompass = angleCompass + 360
 				var compassError : Double = angleCompass - roverCompass
@@ -65,9 +63,9 @@ thing ParameterEstimator includes ParameterEstimatorMsgs, TimerClient, RoverStat
 				if (compassError < -180) compassError = compassError + 360
 				
 				// Speed of Rover, projected on the speed of the Leader
-				var leaderSpeed : Double = `Math.hypot(`&leaderXd&`,`&leaderYd&`)`
+				var leaderSpeed : Double = Hypot(leaderXd, leaderYd)
 				var roverProjectedSpeed : Double = 0
-				if (leaderSpeed < 0.01) roverProjectedSpeed = `Math.hypot(`&roverXd&`,`&roverYd&`)`
+				if (leaderSpeed < 0.01) roverProjectedSpeed = Hypot(roverXd, roverYd)
 				else roverProjectedSpeed = (roverXd*leaderXd + roverYd*leaderYd)/leaderSpeed
 				
 				Estimator!SystemState(compassError, roverProjectedSpeed, leaderSpeed, distance)

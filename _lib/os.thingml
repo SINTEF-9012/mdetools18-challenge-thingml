@@ -1,0 +1,20 @@
+import "datatypes.thingml" from stl
+
+thing fragment OS {
+	abstract function Exit(code : Integer)
+}
+
+thing fragment JavaOS {
+	function Exit(code : Integer) do
+		`System.exit(`&code&`);`
+	end
+}
+
+thing fragment GoOS
+@go_import `os`
+{
+	function Exit(code : Integer) do
+		`os.Exit(int(`&code&`))`
+	end
+}
+

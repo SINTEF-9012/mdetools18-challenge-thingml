@@ -1,0 +1,5 @@
+import "../estimators/parameters.thingml"
+
+thing GoParameterEstimator includes ParameterEstimator, GoMath {
+	
+}

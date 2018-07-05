@@ -1,0 +1,21 @@
+import "../_lib/strings.thingml"
+import "../lib/settings.thingml"
+
+thing JavaSettingsParser includes SettingsParser, JavaStrings
+@java_import `
+	import java.io.FileReader;
+	import java.io.BufferedReader;
+	import java.io.IOException;
+`
+{
+	function ReadConfigFile(path : StringD) do `
+		try (BufferedReader br = new BufferedReader(new FileReader(`&path&`))) {
+			for (String line = br.readLine(); line != null; line = br.readLine()) {
+				` HandleLine(`line` as StringD) `	
+			}
+		} catch (IOException e) {
+			System.err.println("Couldn't read config file: "+`&path&`);
+			System.exit(1);
+		}
+	` end
+}
