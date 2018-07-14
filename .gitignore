@@ -1,2 +1,5 @@
 **/thingml-gen/
 **/Challenge problem/
+**/.ipynb_checkpoints/
+target/
+evaluation/experiments/experiment*/
