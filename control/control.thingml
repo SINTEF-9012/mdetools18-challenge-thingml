@@ -78,7 +78,7 @@ thing fragment ControllerMuxer includes Controller, TimerClient, RoverClient, Se
 				// Send command to rover
 				Rover!SetRoverLRPower(left, right)
 				
-				//println "Power: ", left, ", ", right
+				println "Power: ", left, ", ", right
 			end
 			
 			transition -> Control

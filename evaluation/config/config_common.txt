@@ -1,0 +1,15 @@
+controlPort=9998
+observationPort=9999
+leaderPort=9997
+evaluationPort=9996
+simulationIP=127.0.0.1
+runTime=60000
+waitMin=2000
+waitMax=5000
+speedMin=10
+speedMax=60
+straightPercent=20
+fileName=savedReplay.csv
+tooClose=12
+tooFar=15
+sampleRate=250
