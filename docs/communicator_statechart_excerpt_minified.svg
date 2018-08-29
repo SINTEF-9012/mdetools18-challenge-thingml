@@ -1,0 +1,998 @@
+<?xml version="1.0" encoding="UTF-8" standalone="no"?>
+<svg
+   xmlns:dc="http://purl.org/dc/elements/1.1/"
+   xmlns:cc="http://creativecommons.org/ns#"
+   xmlns:rdf="http://www.w3.org/1999/02/22-rdf-syntax-ns#"
+   xmlns:svg="http://www.w3.org/2000/svg"
+   xmlns="http://www.w3.org/2000/svg"
+   xmlns:sodipodi="http://sodipodi.sourceforge.net/DTD/sodipodi-0.dtd"
+   xmlns:inkscape="http://www.inkscape.org/namespaces/inkscape"
+   contentScriptType="application/ecmascript"
+   contentStyleType="text/css"
+   height="600"
+   preserveAspectRatio="none"
+   version="1.1"
+   viewBox="0 0 1099.9999 600"
+   width="1100"
+   zoomAndPan="magnify"
+   id="svg270"
+   sodipodi:docname="JavaCommunicator_Comms.svg"
+   inkscape:version="0.92.3 (2405546, 2018-03-11)"
+   inkscape:export-filename="C:\Users\jakobho\Documents\Git\mdetools18-challenge-thingml\thingml-gen\uml\RoverControllerJava\RoverControllerJava\docs\JavaCommunicator_Comms.png"
+   inkscape:export-xdpi="300"
+   inkscape:export-ydpi="300">
+  <metadata
+     id="metadata274">
+    <rdf:RDF>
+      <cc:Work
+         rdf:about="">
+        <dc:format>image/svg+xml</dc:format>
+        <dc:type
+           rdf:resource="http://purl.org/dc/dcmitype/StillImage" />
+        <dc:title></dc:title>
+      </cc:Work>
+    </rdf:RDF>
+  </metadata>
+  <sodipodi:namedview
+     pagecolor="#ffffff"
+     bordercolor="#666666"
+     borderopacity="1"
+     objecttolerance="10"
+     gridtolerance="10"
+     guidetolerance="10"
+     inkscape:pageopacity="0"
+     inkscape:pageshadow="2"
+     inkscape:window-width="1920"
+     inkscape:window-height="1017"
+     id="namedview272"
+     showgrid="false"
+     inkscape:zoom="1.0981927"
+     inkscape:cx="517.70172"
+     inkscape:cy="272.48886"
+     inkscape:window-x="-8"
+     inkscape:window-y="-8"
+     inkscape:window-maximized="1"
+     inkscape:current-layer="svg270"
+     fit-margin-top="0"
+     fit-margin-left="0"
+     fit-margin-right="0"
+     fit-margin-bottom="0" />
+  <defs
+     id="defs11">
+    <filter
+       height="3"
+       id="f2wnbzk5rmsgt"
+       width="3"
+       x="-1"
+       y="-1">
+      <feGaussianBlur
+         result="blurOut"
+         stdDeviation="2.0"
+         id="feGaussianBlur2" />
+      <feColorMatrix
+         in="blurOut"
+         result="blurOut2"
+         type="matrix"
+         values="0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 .4 0"
+         id="feColorMatrix4" />
+      <feOffset
+         dx="4.0"
+         dy="4.0"
+         in="blurOut2"
+         result="blurOut3"
+         id="feOffset6" />
+      <feBlend
+         in="SourceGraphic"
+         in2="blurOut3"
+         mode="normal"
+         id="feBlend8" />
+    </filter>
+  </defs>
+  <text
+     style="font-size:12px;font-family:sans-serif;display:inline;fill:#000000"
+     id="text39"
+     y="365.7695"
+     x="656"
+     textLength="0"
+     lengthAdjust="spacingAndGlyphs"
+     font-size="12"
+     transform="translate(-2.6601486,-539.06996)" />
+  <text
+     style="font-size:12px;font-family:sans-serif;display:inline;fill:#000000"
+     id="text49"
+     y="487.7695"
+     x="643"
+     textLength="0"
+     lengthAdjust="spacingAndGlyphs"
+     font-size="12"
+     transform="translate(-2.6601486,-539.06996)" />
+  <rect
+     id="rect51"
+     y="549.60938"
+     x="17"
+     width="1444"
+     style="display:inline;fill:#fefece;stroke:#a80036;stroke-width:1.5;filter:url(#f2wnbzk5rmsgt)"
+     ry="12.5"
+     rx="12.5"
+     height="760.60938"
+     transform="matrix(0.74545829,0,0,0.76597373,-1.9944636,-411.54854)" />
+  <g
+     id="g1498"
+     transform="matrix(1,0,0,0.97981841,-2.6601486,-516.29134)"
+     inkscape:export-xdpi="300"
+     inkscape:export-ydpi="300">
+    <rect
+       height="556.60577"
+       rx="9.3268404"
+       ry="9.5702505"
+       style="display:inline;fill:#ffffff;stroke:#ffffff;stroke-width:0.75582093"
+       width="1072.9597"
+       x="15.825635"
+       y="572.07745"
+       id="rect53" />
+    <line
+       style="display:inline;stroke:#a80036;stroke-width:1.13373137"
+       x1="13.587193"
+       x2="1091.0238"
+       y1="569.78064"
+       y2="569.78064"
+       id="line55" />
+  </g>
+  <text
+     style="font-size:14px;font-family:sans-serif;display:inline;fill:#000000"
+     id="text57"
+     y="569.14258"
+     x="696"
+     textLength="86"
+     lengthAdjust="spacingAndGlyphs"
+     font-size="14"
+     transform="translate(-220.66015,-537.06996)">Communicate</text>
+  <g
+     id="g1289"
+     transform="translate(-32.721343,-537.17239)"
+     style="display:inline">
+    <g
+       transform="translate(113.0578,-60.277502)"
+       style="display:inline"
+       id="g1239">
+      <rect
+         id="rect61"
+         y="646.21881"
+         x="28"
+         width="99"
+         style="display:inline;fill:#fefece;stroke:#a80036;stroke-width:1.5;filter:url(#f2wnbzk5rmsgt)"
+         ry="12.5"
+         rx="12.5"
+         height="52.703098" />
+      <line
+         id="line63"
+         y2="673.82812"
+         y1="673.82812"
+         x2="127"
+         x1="28"
+         style="stroke:#a80036;stroke-width:1.5" />
+      <text
+         style="font-size:14px;font-family:sans-serif;fill:#000000"
+         id="text65"
+         y="665.75201"
+         x="57"
+         textLength="41"
+         lengthAdjust="spacingAndGlyphs"
+         font-size="14">Ready</text>
+      <text
+         style="font-size:12px;font-family:sans-serif;fill:#000000"
+         id="text67"
+         y="691.28522"
+         x="33"
+         textLength="79"
+         lengthAdjust="spacingAndGlyphs"
+         font-size="12">entry / do...end</text>
+    </g>
+    <g
+       transform="translate(16.102378,12.912284)"
+       id="g1277">
+      <circle
+         r="10"
+         id="ellipse59"
+         style="fill:#000000;stroke:none;stroke-width:1;filter:url(#f2wnbzk5rmsgt)"
+         cy="600.21881"
+         cx="77.5" />
+      <g
+         id="g1251"
+         transform="rotate(-90,77.529111,600.68268)">
+        <path
+           d="m 77.5,610.4354 c 0,7.8328 0,19.5404 0,30.6303"
+           id="*start*Communicate-Ready"
+           style="fill:none;stroke:#a80036;stroke-width:1"
+           inkscape:connector-curvature="0" />
+        <polygon
+           points="81.5,637.1015 77.5,641.1015 73.5,637.1015 77.5,646.1015 "
+           style="fill:#a80036;stroke:#a80036;stroke-width:1"
+           id="polygon70" />
+      </g>
+    </g>
+  </g>
+  <g
+     id="g1381"
+     transform="translate(-352.36004,-586.03846)"
+     style="display:inline">
+    <polygon
+       points="377.926,743.5703 474.926,743.5703 474.926,727.2188 464.926,717.2188 377.926,717.2188 "
+       style="fill:#fbfb77;stroke:#a80036;stroke-width:1;filter:url(#f2wnbzk5rmsgt)"
+       id="polygon76" />
+    <g
+       id="g1374">
+      <line
+         id="line80"
+         y2="727.21881"
+         y1="717.21881"
+         x2="464.92599"
+         x1="464.92599"
+         style="stroke:#a80036;stroke-width:1" />
+      <line
+         id="line82"
+         y2="727.21881"
+         y1="727.21881"
+         x2="464.92599"
+         x1="474.92599"
+         style="stroke:#a80036;stroke-width:1" />
+      <text
+         style="font-size:13px;font-family:sans-serif;fill:#000000"
+         id="text84"
+         y="735.71393"
+         x="383.92599"
+         textLength="76"
+         lengthAdjust="spacingAndGlyphs"
+         font-size="13">Region Rover</text>
+    </g>
+  </g>
+  <g
+     id="g1299"
+     transform="translate(657.16522,-695.74606)"
+     style="display:inline">
+    <rect
+       height="50"
+       rx="12.5"
+       ry="12.5"
+       style="display:inline;fill:#fefece;stroke:#a80036;stroke-width:1.5;filter:url(#f2wnbzk5rmsgt)"
+       width="120"
+       x="107.4256"
+       y="977.21881"
+       id="rect92" />
+    <line
+       style="display:inline;stroke:#a80036;stroke-width:1.5"
+       x1="107.4256"
+       x2="227.4256"
+       y1="1004.8281"
+       y2="1004.8281"
+       id="line94" />
+    <text
+       font-size="14"
+       lengthAdjust="spacingAndGlyphs"
+       textLength="100"
+       x="117.4256"
+       y="996.75201"
+       id="text96"
+       style="font-size:14px;font-family:sans-serif;display:inline;fill:#000000">WaitForPosition</text>
+  </g>
+  <g
+     id="g1294"
+     transform="translate(200.32754,-836.61628)"
+     style="display:inline">
+    <rect
+       height="50"
+       rx="12.5"
+       ry="12.5"
+       style="display:inline;fill:#fefece;stroke:#a80036;stroke-width:1.5;filter:url(#f2wnbzk5rmsgt)"
+       width="129"
+       x="565.92603"
+       y="977.21881"
+       id="rect98" />
+    <line
+       style="display:inline;stroke:#a80036;stroke-width:1.5"
+       x1="565.92603"
+       x2="694.92603"
+       y1="1004.8281"
+       y2="1004.8281"
+       id="line100" />
+    <text
+       font-size="14"
+       lengthAdjust="spacingAndGlyphs"
+       textLength="109"
+       x="575.92603"
+       y="996.75201"
+       id="text102"
+       style="font-size:14px;font-family:sans-serif;display:inline;fill:#000000">WaitForCompass</text>
+  </g>
+  <g
+     id="g1365"
+     transform="translate(-142.85457,-629.40029)"
+     style="display:inline">
+    <g
+       style="display:inline"
+       id="g1304">
+      <rect
+         id="rect86"
+         y="810.21881"
+         x="320.42599"
+         width="134"
+         style="fill:#fefece;stroke:#a80036;stroke-width:1.5;filter:url(#f2wnbzk5rmsgt)"
+         ry="12.5"
+         rx="12.5"
+         height="50" />
+      <line
+         id="line88"
+         y2="837.82812"
+         y1="837.82812"
+         x2="454.42599"
+         x1="320.42599"
+         style="stroke:#a80036;stroke-width:1.5" />
+      <text
+         style="font-size:14px;font-family:sans-serif;fill:#000000"
+         id="text90"
+         y="829.75201"
+         x="330.42599"
+         textLength="114"
+         lengthAdjust="spacingAndGlyphs"
+         font-size="14">WaitForCommand</text>
+    </g>
+    <g
+       transform="translate(-84.305438,62.251001)"
+       id="g1354">
+      <circle
+         r="10"
+         id="ellipse74"
+         style="fill:#000000;stroke:none;stroke-width:1;filter:url(#f2wnbzk5rmsgt)"
+         cy="775.95068"
+         cx="318.14362" />
+      <g
+         id="g1348"
+         transform="rotate(-69.935648,365.93368,775.55468)">
+        <path
+           d="m 352.665,740.0007 c 5.273,14.2921 15.939,43.2031 24.074,65.2511"
+           id="*start*CONC17-WaitForCommand"
+           style="fill:none;stroke:#a80036;stroke-width:1"
+           inkscape:connector-curvature="0" />
+        <polygon
+           points="378.537,810.1268 379.1725,800.2984 376.8054,805.4362 371.6676,803.069 "
+           style="fill:#a80036;stroke:#a80036;stroke-width:1"
+           id="polygon105" />
+      </g>
+    </g>
+  </g>
+  <g
+     id="g1385"
+     transform="rotate(90,647.35609,424.67217)"
+     style="display:inline">
+    <path
+       d="m 454.763,822.8467 c 15.92952,-40.75588 68.96501,-31.89718 69.13931,11.378 0.16559,41.11526 -49.95936,47.57334 -65.21088,12.3025"
+       id="WaitForCommand-WaitForCommand"
+       style="fill:none;stroke:#a80036;stroke-width:1"
+       inkscape:connector-curvature="0"
+       sodipodi:nodetypes="csc" />
+    <polygon
+       points="459.6392,846.4849 462.6555,841.6993 454.763,847.5908 464.4248,849.5012 "
+       style="fill:#a80036;stroke:#a80036;stroke-width:1"
+       id="polygon108"
+       transform="rotate(57.662136,459.12689,845.64516)" />
+  </g>
+  <text
+     style="font-size:13px;font-family:sans-serif;display:inline;fill:#000000"
+     id="text114"
+     y="832.41699"
+     x="482.42599"
+     textLength="0"
+     lengthAdjust="spacingAndGlyphs"
+     font-size="13"
+     transform="translate(-2.6601486,-539.06996)" />
+  <g
+     id="g1336"
+     transform="translate(-458.5872,-496.67643)"
+     style="display:inline">
+    <g
+       id="g1324">
+      <text
+         style="font-size:13px;font-family:sans-serif;fill:#000000"
+         id="text110"
+         y="799.71393"
+         x="478.42599"
+         textLength="129"
+         lengthAdjust="spacingAndGlyphs"
+         font-size="13">brake:Rover?SetBrake</text>
+      <text
+         style="font-size:13px;font-family:sans-serif;fill:#000000"
+         id="text112"
+         y="816.06543"
+         x="478.42599"
+         textLength="437"
+         lengthAdjust="spacingAndGlyphs"
+         font-size="13">action ControlSocket!Out(&quot;Rover,brake(&quot; + FormatInteger(brake.brake) + &quot;)&quot;)</text>
+    </g>
+    <g
+       transform="translate(0,-12)"
+       id="g1328">
+      <text
+         style="font-size:13px;font-family:sans-serif;fill:#000000"
+         id="text116"
+         y="848.76862"
+         x="478.42599"
+         textLength="187"
+         lengthAdjust="spacingAndGlyphs"
+         font-size="13">||power:Rover?SetRoverLRPower</text>
+      <text
+         style="font-size:13px;font-family:sans-serif;fill:#000000"
+         id="text118"
+         y="865.12012"
+         x="478.42599"
+         textLength="659"
+         lengthAdjust="spacingAndGlyphs"
+         font-size="13">action ControlSocket!Out(&quot;Rover,setLRPower(&quot; + FormatInteger(power.left) + &quot;,&quot; + FormatInteger(power.right) + &quot;)&quot;)</text>
+    </g>
+  </g>
+  <text
+     style="font-size:13px;font-family:sans-serif;display:inline;fill:#000000"
+     id="text120"
+     y="881.47168"
+     x="482.42599"
+     textLength="0"
+     lengthAdjust="spacingAndGlyphs"
+     font-size="13"
+     transform="translate(-2.6601486,-539.06996)" />
+  <path
+     inkscape:connector-curvature="0"
+     style="display:inline;fill:none;stroke:#a80036;stroke-width:1"
+     id="WaitForCommand-WaitForPosition"
+     d="m 895.25357,168.21185 c 16.27569,-0.49416 16.01413,9.59842 15.84609,19.55366 -0.86137,51.03065 -231.98083,20.37247 -264.84809,20.3681 -25.17728,-0.003 -246.91015,-11.48398 -327.9562,-2.1819"
+     sodipodi:nodetypes="cssc" />
+  <polygon
+     id="polygon123"
+     style="display:inline;fill:#a80036;stroke:#a80036;stroke-width:1"
+     points="99.3299,991.0993 102.3947,995.8539 97.6401,998.9188 107.2819,996.9101 "
+     transform="matrix(-0.98697085,-0.16089916,-0.16089916,0.98697085,579.58801,-760.45184)"
+     inkscape:transform-center-x="-33.906706"
+     inkscape:transform-center-y="2.8171611" />
+  <g
+     id="g1320"
+     transform="translate(481.83798,-633.06505)"
+     style="display:inline">
+    <text
+       font-size="13"
+       lengthAdjust="spacingAndGlyphs"
+       textLength="139"
+       x="39.425598"
+       y="922.71393"
+       id="text125"
+       style="font-size:13px;font-family:sans-serif;fill:#000000">Rover?GetRoverPosition</text>
+    <text
+       font-size="13"
+       lengthAdjust="spacingAndGlyphs"
+       textLength="235"
+       x="39.425598"
+       y="939.06543"
+       id="text127"
+       style="font-size:13px;font-family:sans-serif;fill:#000000">action ControlSocket!Out(&quot;Rover,GPS()&quot;)</text>
+  </g>
+  <text
+     style="font-size:13px;font-family:sans-serif;display:inline;fill:#000000"
+     id="text129"
+     y="955.41699"
+     x="43.425598"
+     textLength="0"
+     lengthAdjust="spacingAndGlyphs"
+     font-size="13"
+     transform="translate(-2.6601486,-539.06996)" />
+  <path
+     inkscape:connector-curvature="0"
+     style="display:inline;fill:none;stroke:#a80036;stroke-width:1"
+     id="WaitForCommand-WaitForCompass"
+     d="m 311.66387,194.73989 c 39.52318,-22.65263 112.33918,-67.75999 207.93252,-68.69894 95.59335,-0.93896 197.69939,21.34692 239.47758,28.13302"
+     sodipodi:nodetypes="czc" />
+  <polygon
+     id="polygon132"
+     style="display:inline;fill:#a80036;stroke:#a80036;stroke-width:1"
+     points="556.2343,997.9315 565.831,995.7172 557.7566,990.0777 560.9224,994.7657 "
+     transform="translate(198.15157,-840.59171)" />
+  <g
+     id="g1308"
+     transform="translate(-27.539748,-778.12161)"
+     style="display:inline">
+    <text
+       font-size="13"
+       lengthAdjust="spacingAndGlyphs"
+       textLength="147"
+       x="480.42599"
+       y="922.71393"
+       id="text134"
+       style="font-size:13px;font-family:sans-serif;fill:#000000">Rover?GetRoverCompass</text>
+    <text
+       font-size="13"
+       lengthAdjust="spacingAndGlyphs"
+       textLength="280"
+       x="480.42599"
+       y="939.06543"
+       id="text136"
+       style="font-size:13px;font-family:sans-serif;fill:#000000">action ControlSocket!Out(&quot;Rover,getCompass()&quot;)</text>
+  </g>
+  <text
+     style="font-size:13px;font-family:sans-serif;display:inline;fill:#000000"
+     id="text138"
+     y="955.41699"
+     x="484.42599"
+     textLength="0"
+     lengthAdjust="spacingAndGlyphs"
+     font-size="13"
+     transform="translate(-2.6601486,-539.06996)" />
+  <path
+     inkscape:connector-curvature="0"
+     style="display:inline;fill:none;stroke:#a80036;stroke-width:1"
+     id="WaitForPosition-WaitForCommand"
+     d="m 311.43332,221.1924 c 94.5339,32.26568 72.18595,42.37766 165.03904,77.23063 92.85309,34.85297 227.47769,19.29641 282.41457,20.20886"
+     sodipodi:nodetypes="czc" />
+  <polygon
+     id="polygon141"
+     style="display:inline;fill:#a80036;stroke:#a80036;stroke-width:1"
+     points="346.1844,863.2074 345.3365,868.8003 350.21,860.2418 340.5915,862.3594 "
+     transform="matrix(0.78690046,-0.61707995,-0.61707995,-0.78690046,1019.1422,1211.5135)" />
+  <g
+     id="g1316"
+     transform="translate(607.50215,-624.84207)"
+     style="display:inline">
+    <text
+       font-size="13"
+       lengthAdjust="spacingAndGlyphs"
+       textLength="156"
+       x="299.42599"
+       y="931.21393"
+       id="text143"
+       style="font-size:13px;font-family:sans-serif;fill:#000000">response:ControlSocket?In</text>
+    <text
+       font-size="13"
+       lengthAdjust="spacingAndGlyphs"
+       textLength="86"
+       x="299.42599"
+       y="947.56543"
+       id="text145"
+       style="font-size:13px;font-family:sans-serif;fill:#000000">action do...end</text>
+  </g>
+  <path
+     inkscape:connector-curvature="0"
+     style="display:inline;fill:none;stroke:#a80036;stroke-width:1"
+     id="WaitForCompass-WaitForCommand"
+     d="m 884.59082,309.08207 c 13.87543,0 14.70011,-13.5871 13.77218,-22.27945 -2.78378,-37.9108 -99.75458,-36.33269 -273.18309,-41.0929 -117.04104,-3.21251 -264.40644,-29.5305 -306.92533,-32.22373"
+     sodipodi:nodetypes="ccsc" />
+  <polygon
+     id="polygon148"
+     style="display:inline;fill:#a80036;stroke:#a80036;stroke-width:1"
+     points="463.4397,843.7821 459.6954,839.5418 463.9357,835.7975 454.705,839.2318 "
+     transform="translate(-141.44082,-626.05582)" />
+  <g
+     id="g1312"
+     transform="translate(140.98479,-749.33628)"
+     style="display:inline">
+    <text
+       font-size="13"
+       lengthAdjust="spacingAndGlyphs"
+       textLength="156"
+       x="772.42603"
+       y="931.21393"
+       id="text150"
+       style="font-size:13px;font-family:sans-serif;fill:#000000">response:ControlSocket?In</text>
+    <text
+       font-size="13"
+       lengthAdjust="spacingAndGlyphs"
+       textLength="86"
+       x="772.42603"
+       y="947.56543"
+       id="text152"
+       style="font-size:13px;font-family:sans-serif;fill:#000000">action do...end</text>
+  </g>
+  <g
+     id="g1488"
+     transform="matrix(0.74075143,0,0,1,3.0433205,-539.06996)">
+    <line
+       style="display:inline;stroke:#a80036;stroke-width:1.5;stroke-dasharray:8, 10"
+       x1="22"
+       x2="1454"
+       y1="659.21881"
+       y2="659.21881"
+       id="line72" />
+    <line
+       style="display:inline;stroke:#a80036;stroke-width:1.5;stroke-dasharray:8, 10"
+       x1="22"
+       x2="1454"
+       y1="905.21881"
+       y2="905.21881"
+       id="line154" />
+  </g>
+  <g
+     id="g1403"
+     transform="translate(-547.43528,-668.28886)"
+     style="display:inline">
+    <polygon
+       points="571.133,1071.5703 675.133,1071.5703 675.133,1055.2188 665.133,1045.2188 571.133,1045.2188 "
+       style="display:inline;fill:#fbfb77;stroke:#a80036;stroke-width:1;filter:url(#f2wnbzk5rmsgt)"
+       id="polygon158" />
+    <line
+       style="display:inline;stroke:#a80036;stroke-width:1"
+       x1="665.133"
+       x2="665.133"
+       y1="1045.2188"
+       y2="1055.2188"
+       id="line162" />
+    <line
+       style="display:inline;stroke:#a80036;stroke-width:1"
+       x1="675.133"
+       x2="665.133"
+       y1="1055.2188"
+       y2="1055.2188"
+       id="line164" />
+    <text
+       font-size="13"
+       lengthAdjust="spacingAndGlyphs"
+       textLength="83"
+       x="577.133"
+       y="1063.7139"
+       id="text166"
+       style="font-size:13px;font-family:sans-serif;display:inline;fill:#000000">Region Leader</text>
+  </g>
+  <g
+     id="g1408"
+     transform="translate(-349.12092,-707.11381)"
+     style="display:inline">
+    <rect
+       height="50"
+       rx="12.5"
+       ry="12.5"
+       style="display:inline;fill:#fefece;stroke:#a80036;stroke-width:1.5;filter:url(#f2wnbzk5rmsgt)"
+       width="150"
+       x="508.133"
+       y="1108.2188"
+       id="rect168" />
+    <line
+       style="display:inline;stroke:#a80036;stroke-width:1.5"
+       x1="508.133"
+       x2="658.133"
+       y1="1135.8281"
+       y2="1135.8281"
+       id="line170" />
+    <text
+       font-size="14"
+       lengthAdjust="spacingAndGlyphs"
+       textLength="130"
+       x="518.133"
+       y="1127.752"
+       id="text172"
+       style="font-size:14px;font-family:sans-serif;display:inline;fill:#000000">WaitForCommand_1</text>
+  </g>
+  <g
+     id="g1413"
+     transform="translate(-27.653418,-716.22661)"
+     style="display:inline">
+    <rect
+       height="50"
+       rx="12.5"
+       ry="12.5"
+       style="display:inline;fill:#fefece;stroke:#a80036;stroke-width:1.5;filter:url(#f2wnbzk5rmsgt)"
+       width="181"
+       x="126.6329"
+       y="1245.2188"
+       id="rect174" />
+    <line
+       style="display:inline;stroke:#a80036;stroke-width:1.5"
+       x1="126.6329"
+       x2="307.6329"
+       y1="1272.8281"
+       y2="1272.8281"
+       id="line176" />
+    <text
+       font-size="14"
+       lengthAdjust="spacingAndGlyphs"
+       textLength="161"
+       x="136.6329"
+       y="1264.752"
+       id="text178"
+       style="font-size:14px;font-family:sans-serif;display:inline;fill:#000000">WaitForSimulationStarted</text>
+  </g>
+  <g
+     id="g1463"
+     transform="translate(200.04185,-716.79535)"
+     style="display:inline">
+    <rect
+       height="50"
+       rx="12.5"
+       ry="12.5"
+       style="display:inline;fill:#fefece;stroke:#a80036;stroke-width:1.5;filter:url(#f2wnbzk5rmsgt)"
+       width="136"
+       x="436.133"
+       y="1245.2188"
+       id="rect180" />
+    <line
+       style="display:inline;stroke:#a80036;stroke-width:1.5"
+       x1="436.133"
+       x2="572.133"
+       y1="1272.8281"
+       y2="1272.8281"
+       id="line182" />
+    <text
+       font-size="14"
+       lengthAdjust="spacingAndGlyphs"
+       textLength="116"
+       x="446.133"
+       y="1264.752"
+       id="text184"
+       style="font-size:14px;font-family:sans-serif;display:inline;fill:#000000">WaitForPosition_1</text>
+  </g>
+  <g
+     id="g1458"
+     transform="translate(-304.65144,-849.79576)"
+     style="display:inline">
+    <rect
+       height="50"
+       rx="12.5"
+       ry="12.5"
+       style="display:inline;fill:#fefece;stroke:#a80036;stroke-width:1.5;filter:url(#f2wnbzk5rmsgt)"
+       width="125"
+       x="1033.63"
+       y="1245.2188"
+       id="rect186" />
+    <line
+       style="display:inline;stroke:#a80036;stroke-width:1.5"
+       x1="1033.63"
+       x2="1158.63"
+       y1="1272.8281"
+       y2="1272.8281"
+       id="line188" />
+    <text
+       font-size="14"
+       lengthAdjust="spacingAndGlyphs"
+       textLength="105"
+       x="1043.63"
+       y="1264.752"
+       id="text190"
+       style="font-size:14px;font-family:sans-serif;display:inline;fill:#000000">WaitForDistance</text>
+  </g>
+  <g
+     id="g1468"
+     transform="translate(0.26008339,-547.83066)"
+     style="display:inline">
+    <circle
+       cx="102.27724"
+       cy="987.68182"
+       style="display:inline;fill:#000000;stroke:none;stroke-width:1;filter:url(#f2wnbzk5rmsgt)"
+       id="ellipse156"
+       r="10" />
+    <path
+       inkscape:transform-center-y="-7.661746"
+       inkscape:transform-center-x="-31.026984"
+       d="m 111.99934,985.59116 c 9.64682,-2.4483 25.56362,-6.48712 39.95618,-10.13884"
+       id="*start*CONC32-WaitForCommand_1"
+       style="display:inline;fill:none;stroke:#a80036;stroke-width:1"
+       inkscape:connector-curvature="0" />
+    <polygon
+       inkscape:transform-center-y="-11.84514"
+       inkscape:transform-center-x="-51.370813"
+       transform="rotate(-75.517627,277.02889,1307.6322)"
+       points="562.1321,1102.2098 569.963,1108.1828 569.149,1098.3676 567.5616,1103.7972 "
+       style="display:inline;fill:#a80036;stroke:#a80036;stroke-width:1"
+       id="polygon193" />
+  </g>
+  <path
+     inkscape:connector-curvature="0"
+     style="display:inline;fill:none;stroke:#a80036;stroke-width:1"
+     id="WaitForCommand_1-WaitForSimulationStarted"
+     d="m 165.92223,456.40234 c -14.62293,25.8562 -22.22191,43.6933 -0.66619,72.3822"
+     sodipodi:nodetypes="cc" />
+  <polygon
+     id="polygon196"
+     style="display:inline;fill:#a80036;stroke:#a80036;stroke-width:1"
+     points="121.4741,1257.4373 116.8339,1260.6729 126.3964,1258.3152 118.2385,1252.7971 "
+     transform="matrix(0.64144592,-0.76716826,-0.76716826,-0.64144592,1052.6691,1356.1713)" />
+  <g
+     id="g1417"
+     transform="translate(154.33456,-698.29465)"
+     style="display:inline">
+    <text
+       font-size="13"
+       lengthAdjust="spacingAndGlyphs"
+       textLength="113"
+       x="40.1329"
+       y="1190.7139"
+       id="text198"
+       style="font-size:13px;font-family:sans-serif;display:inline;fill:#000000">Leader?LeaderStart</text>
+    <text
+       font-size="13"
+       lengthAdjust="spacingAndGlyphs"
+       textLength="222"
+       x="40.1329"
+       y="1207.0654"
+       id="text200"
+       style="font-size:13px;font-family:sans-serif;display:inline;fill:#000000">action ObservationSocket!Out(&quot;ready&quot;)</text>
+  </g>
+  <text
+     style="font-size:13px;font-family:sans-serif;display:inline;fill:#000000"
+     id="text202"
+     y="1223.417"
+     x="44.1329"
+     textLength="0"
+     lengthAdjust="spacingAndGlyphs"
+     font-size="13"
+     transform="translate(-2.6601486,-539.06996)" />
+  <path
+     inkscape:connector-curvature="0"
+     style="display:inline;fill:none;stroke:#a80036;stroke-width:1"
+     id="WaitForCommand_1-WaitForPosition_1"
+     d="m 306.22176,445.47783 c 114.66261,33.53901 172.32106,35.24601 186.25486,62.40551 12.50526,24.3749 11.63771,28.1454 21.87571,37.079 18.63962,16.2648 49.09125,10.5511 115.35797,10.8404"
+     sodipodi:nodetypes="cssc" />
+  <polygon
+     id="polygon205"
+     style="display:inline;fill:#a80036;stroke:#a80036;stroke-width:1"
+     points="449.0246,1241.947 443.3831,1242.3638 452.811,1245.2125 448.6078,1236.3055 "
+     transform="rotate(-40.052639,-401.86998,651.01424)" />
+  <g
+     id="g1441"
+     transform="translate(63.190634,-686.46109)"
+     style="display:inline">
+    <text
+       font-size="13"
+       lengthAdjust="spacingAndGlyphs"
+       textLength="153"
+       x="438.133"
+       y="1190.7139"
+       id="text207"
+       style="font-size:13px;font-family:sans-serif;display:inline;fill:#000000">Leader?GetLeaderPosition</text>
+    <text
+       font-size="13"
+       lengthAdjust="spacingAndGlyphs"
+       textLength="269"
+       x="438.133"
+       y="1207.0654"
+       id="text209"
+       style="font-size:13px;font-family:sans-serif;display:inline;fill:#000000">action ObservationSocket!Out(&quot;Leader,GPS()&quot;)</text>
+  </g>
+  <text
+     style="font-size:13px;font-family:sans-serif;display:inline;fill:#000000"
+     id="text211"
+     y="1223.417"
+     x="442.133"
+     textLength="0"
+     lengthAdjust="spacingAndGlyphs"
+     font-size="13"
+     transform="translate(-2.6601486,-539.06996)" />
+  <path
+     inkscape:connector-curvature="0"
+     style="display:inline;fill:none;stroke:#a80036;stroke-width:1"
+     id="WaitForCommand_1-WaitForDistance"
+     d="m 309.11271,418.56236 c 24.57761,-10.47208 63.4293,-30.98418 110.97155,-34.15257 45.56704,-3.03676 154.28678,-3.13974 215.04587,1.74828 32.03706,2.57736 57.88456,14.83658 87.61456,20.48538"
+     sodipodi:nodetypes="cssc" />
+  <polygon
+     id="polygon214"
+     style="display:inline;fill:#a80036;stroke:#a80036;stroke-width:1"
+     points="1033.61,1263.5093 1025.4769,1257.9547 1028.6917,1262.6093 1024.037,1265.824 "
+     transform="translate(-305.94701,-855.96585)" />
+  <g
+     id="g1449"
+     transform="translate(-522.75357,-788.33382)"
+     style="display:inline">
+    <text
+       font-size="13"
+       lengthAdjust="spacingAndGlyphs"
+       textLength="157"
+       x="940.133"
+       y="1190.7139"
+       id="text216"
+       style="font-size:13px;font-family:sans-serif;display:inline;fill:#000000">Leader?GetLeaderDistance</text>
+    <text
+       font-size="13"
+       lengthAdjust="spacingAndGlyphs"
+       textLength="292"
+       x="940.133"
+       y="1207.0654"
+       id="text218"
+       style="font-size:13px;font-family:sans-serif;display:inline;fill:#000000">action ObservationSocket!Out(&quot;Leader,Distance()&quot;)</text>
+  </g>
+  <text
+     style="font-size:13px;font-family:sans-serif;display:inline;fill:#000000"
+     id="text220"
+     y="1223.417"
+     x="944.133"
+     textLength="0"
+     lengthAdjust="spacingAndGlyphs"
+     font-size="13"
+     transform="translate(-2.6601486,-539.06996)" />
+  <path
+     inkscape:connector-curvature="0"
+     style="display:inline;fill:none;stroke:#a80036;stroke-width:1"
+     id="WaitForSimulationStarted-WaitForCommand_1"
+     d="m 174.41563,522.22874 c 11.45392,-25.0208 16.04506,-36.3533 3.77166,-69.1992"
+     sodipodi:nodetypes="cc" />
+  <polygon
+     id="polygon223"
+     style="display:inline;fill:#a80036;stroke:#a80036;stroke-width:1"
+     points="498.7272,1134.8782 503.0017,1138.5835 499.2964,1142.8579 507.989,1138.2278 "
+     transform="rotate(121.06106,512.85032,737.56913)" />
+  <g
+     id="g1421"
+     transform="translate(-274.75232,-706.48027)"
+     style="display:inline">
+    <text
+       font-size="13"
+       lengthAdjust="spacingAndGlyphs"
+       textLength="126"
+       x="297.133"
+       y="1199.2139"
+       id="text225"
+       style="font-size:13px;font-family:sans-serif;display:inline;fill:#000000">ObservationSocket?In</text>
+    <text
+       font-size="13"
+       lengthAdjust="spacingAndGlyphs"
+       textLength="86"
+       x="297.133"
+       y="1215.5654"
+       id="text227"
+       style="font-size:13px;font-family:sans-serif;display:inline;fill:#000000">action do...end</text>
+  </g>
+  <path
+     inkscape:connector-curvature="0"
+     style="display:inline;fill:none;stroke:#a80036;stroke-width:1"
+     id="WaitForPosition_1-WaitForCommand_1"
+     d="m 772.17485,556.03274 c 13.45818,-0.1816 26.1032,-8.2481 26.03802,-25.6286 -0.11653,-31.0753 -36.60571,-41.6968 -126.10909,-43.1994 -18.51736,-0.3109 -179.08208,-26.2226 -356.45261,-49.39583"
+     sodipodi:nodetypes="cssc" />
+  <polygon
+     id="polygon230"
+     style="display:inline;fill:#a80036;stroke:#a80036;stroke-width:1"
+     points="668.2641,1142.6081 658.456,1143.5028 665.6925,1150.1835 663.1906,1145.11 "
+     transform="rotate(-19.482064,-1570.636,1803.6888)" />
+  <g
+     id="g1445"
+     transform="translate(82.992095,-661.05092)"
+     style="display:inline">
+    <text
+       font-size="13"
+       lengthAdjust="spacingAndGlyphs"
+       textLength="183"
+       x="720.133"
+       y="1199.2139"
+       id="text232"
+       style="font-size:13px;font-family:sans-serif;display:inline;fill:#000000">response:ObservationSocket?In</text>
+    <text
+       font-size="13"
+       lengthAdjust="spacingAndGlyphs"
+       textLength="86"
+       x="720.133"
+       y="1215.5654"
+       id="text234"
+       style="font-size:13px;font-family:sans-serif;display:inline;fill:#000000">action do...end</text>
+  </g>
+  <path
+     inkscape:connector-curvature="0"
+     style="display:inline;fill:none;stroke:#a80036;stroke-width:1"
+     id="WaitForDistance-WaitForCommand_1"
+     d="m 853.97856,414.60773 c 6.66244,0.31279 21.9315,2.30927 22.00857,21.45011 0.11962,29.711 -112.3668,21.78273 -163.30832,21.58147 -55.82648,-0.22056 -233.30083,-31.7608 -398.66683,-30.9508"
+     sodipodi:nodetypes="cssc" />
+  <polygon
+     id="polygon237"
+     style="display:inline;fill:#a80036;stroke:#a80036;stroke-width:1"
+     points="663.1989,1133.416 667.1783,1129.3955 658.199,1133.4418 667.2195,1137.3954 "
+     transform="translate(-348.19101,-706.72749)" />
+  <g
+     id="g1453"
+     transform="translate(-358.73202,-786.6847)"
+     style="display:inline">
+    <text
+       font-size="13"
+       lengthAdjust="spacingAndGlyphs"
+       textLength="183"
+       x="1244.13"
+       y="1199.2139"
+       id="text239"
+       style="font-size:13px;font-family:sans-serif;display:inline;fill:#000000">response:ObservationSocket?In</text>
+    <text
+       font-size="13"
+       lengthAdjust="spacingAndGlyphs"
+       textLength="86"
+       x="1244.13"
+       y="1215.5654"
+       id="text241"
+       style="font-size:13px;font-family:sans-serif;display:inline;fill:#000000">action do...end</text>
+  </g>
+</svg>
