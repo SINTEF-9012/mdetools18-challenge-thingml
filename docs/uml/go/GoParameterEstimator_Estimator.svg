@@ -1,0 +1,32 @@
+<?xml version="1.0" encoding="UTF-8" standalone="no"?><svg xmlns="http://www.w3.org/2000/svg" xmlns:xlink="http://www.w3.org/1999/xlink" contentScriptType="application/ecmascript" contentStyleType="text/css" height="431px" preserveAspectRatio="none" style="width:411px;height:431px;" version="1.1" viewBox="0 0 411 431" width="411px" zoomAndPan="magnify"><defs><filter height="300%" id="f1d0c9sl1bm4iu" width="300%" x="-1" y="-1"><feGaussianBlur result="blurOut" stdDeviation="2.0"/><feColorMatrix in="blurOut" result="blurOut2" type="matrix" values="0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 .4 0"/><feOffset dx="4.0" dy="4.0" in="blurOut2" result="blurOut3"/><feBlend in="SourceGraphic" in2="blurOut3" mode="normal"/></filter></defs><g><ellipse cx="202.5" cy="18" fill="#000000" filter="url(#f1d0c9sl1bm4iu)" rx="10" ry="10" style="stroke: none; stroke-width: 1.0;"/><rect fill="#FEFECE" filter="url(#f1d0c9sl1bm4iu)" height="304.7969" rx="12.5" ry="12.5" style="stroke: #A80036; stroke-width: 1.5;" width="393" x="6" y="88"/><rect fill="#FFFFFF" height="236" rx="12.5" ry="12.5" style="stroke: #FFFFFF; stroke-width: 1.0;" width="387" x="9" y="153.7969"/><line style="stroke: #A80036; stroke-width: 1.5;" x1="6" x2="399" y1="150.7969" y2="150.7969"/><line style="stroke: #A80036; stroke-width: 1.5;" x1="6" x2="399" y1="115.6094" y2="115.6094"/><text fill="#000000" font-family="sans-serif" font-size="14" lengthAdjust="spacingAndGlyphs" textLength="59" x="173" y="107.5332">Estimator</text><text fill="#000000" font-family="sans-serif" font-size="12" lengthAdjust="spacingAndGlyphs" textLength="309" x="11" y="128.0664">estimates:RoverEstimator?RoverState / \naction do...end</text><text fill="#000000" font-family="sans-serif" font-size="12" lengthAdjust="spacingAndGlyphs" textLength="323" x="11" y="143.1602">estimates:LeaderEstimator?LeaderState / \naction do...end</text><ellipse cx="90.5" cy="173.7969" fill="#000000" filter="url(#f1d0c9sl1bm4iu)" rx="10" ry="10" style="stroke: none; stroke-width: 1.0;"/><rect fill="#FEFECE" filter="url(#f1d0c9sl1bm4iu)" height="50" rx="12.5" ry="12.5" style="stroke: #A80036; stroke-width: 1.5;" width="147" x="17" y="220.7969"/><line style="stroke: #A80036; stroke-width: 1.5;" x1="17" x2="164" y1="248.4063" y2="248.4063"/><text fill="#000000" font-family="sans-serif" font-size="14" lengthAdjust="spacingAndGlyphs" textLength="127" x="27" y="240.3301">WaitForEstimates_3</text><rect fill="#FEFECE" filter="url(#f1d0c9sl1bm4iu)" height="52.7031" rx="12.5" ry="12.5" style="stroke: #A80036; stroke-width: 1.5;" width="99" x="41" y="324.7969"/><line style="stroke: #A80036; stroke-width: 1.5;" x1="41" x2="140" y1="352.4063" y2="352.4063"/><text fill="#000000" font-family="sans-serif" font-size="14" lengthAdjust="spacingAndGlyphs" textLength="70" x="55.5" y="344.3301">Estimate_9</text><text fill="#000000" font-family="sans-serif" font-size="12" lengthAdjust="spacingAndGlyphs" textLength="79" x="46" y="369.8633">entry / do...end</text><!--link WaitForEstimates_3 to Estimate_9--><path d="M90.5,270.8019 C90.5,285.288 90.5,303.8919 90.5,319.46 " fill="none" id="WaitForEstimates_3-Estimate_9" style="stroke: #A80036; stroke-width: 1.0;"/><polygon fill="#A80036" points="90.5,324.6129,94.5,315.6129,90.5,319.6129,86.5,315.6129,90.5,324.6129" style="stroke: #A80036; stroke-width: 1.0;"/><text fill="#000000" font-family="sans-serif" font-size="13" lengthAdjust="spacingAndGlyphs" textLength="158" x="91.5" y="303.292">[(hasRover and hasLeader)]</text><!--link Estimate_9 to Estimate_9--><path d="M140.245,341.8897 C150.573,342.8799 158,346.0156 158,351.2969 C158,355.6704 152.907,358.5726 145.291,360.0034 " fill="none" id="Estimate_9-Estimate_9" style="stroke: #A80036; stroke-width: 1.0;"/><polygon fill="#A80036" points="140.245,360.7041,149.7101,363.4266,145.1974,360.0155,148.6084,355.5028,140.245,360.7041" style="stroke: #A80036; stroke-width: 1.0;"/><text fill="#000000" font-family="sans-serif" font-size="13" lengthAdjust="spacingAndGlyphs" textLength="191" x="164" y="356.792">t:Timer?timer_timeout[(t.id == 3)]</text><!--link *start*Estimator to WaitForEstimates_3--><path d="M90.5,183.9479 C90.5,191.9829 90.5,204.1229 90.5,215.4509 " fill="none" id="*start*Estimator-WaitForEstimates_3" style="stroke: #A80036; stroke-width: 1.0;"/><polygon fill="#A80036" points="90.5,220.5809,94.5,211.5809,90.5,215.5809,86.5,211.5809,90.5,220.5809" style="stroke: #A80036; stroke-width: 1.0;"/><!--link *start to Estimator--><path d="M202.5,28.194 C202.5,39.266 202.5,59.336 202.5,82.851 " fill="none" id="*start-Estimator" style="stroke: #A80036; stroke-width: 1.0;"/><polygon fill="#A80036" points="202.5,87.919,206.5,78.919,202.5,82.919,198.5,78.919,202.5,87.919" style="stroke: #A80036; stroke-width: 1.0;"/><text fill="#000000" font-family="sans-serif" font-size="14" lengthAdjust="spacingAndGlyphs" textLength="236" x="90.5" y="417.5332">Behavior of thing ParameterEstimator</text><!--
+@startuml
+skinparam defaultTextAlignment left
+caption Behavior of thing ParameterEstimator
+[*] - -> Estimator
+state Estimator{
+state WaitForEstimates_3{
+
+WaitForEstimates_3 - -> Estimate_9 : [(hasRover and hasLeader)]
+}
+state Estimate_9{
+	Estimate_9 : entry / do...end
+
+Estimate_9 - -> Estimate_9 : t:Timer?timer_timeout[(t.id == 3)]
+}
+[*] - -> WaitForEstimates_3
+	Estimator : estimates:RoverEstimator?RoverState / \naction do...end
+	Estimator : estimates:LeaderEstimator?LeaderState / \naction do...end
+}
+@enduml
+
+PlantUML version 1.2017.15(Mon Jul 03 18:45:34 CEST 2017)
+(GPL source distribution)
+Java Runtime: Java(TM) SE Runtime Environment
+JVM: Java HotSpot(TM) 64-Bit Server VM
+Java Version: 1.8.0_151-b12
+Operating System: Windows 10
+OS Version: 10.0
+Default Encoding: Cp1252
+Language: en
+Country: GB
+--></g></svg>
