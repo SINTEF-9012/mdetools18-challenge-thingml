@@ -13,7 +13,7 @@ The solution is described in more detail in:
 
 The research leading to these results has received funding from the European Commission's H2020 programme under grant agreement no 780351 ([ENACT](https://www.enact-project.eu/)).
 
-[![ENACT logo](docs/logo-enact-blue2.png)](https://www.enact-project.eu/)
+[![ENACT logo](https://www.enact-project.eu/img/logo-enact-blue2.png)](https://www.enact-project.eu/)
 
 ## Running the compiled binaries:
 > Note: this code has only been tested using the Windows version of the challenge. Slight modifications might be required to run the code on another platform.
